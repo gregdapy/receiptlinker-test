@@ -626,7 +626,6 @@
                 </div>
 
                 <div id="camera-interface" class="camera-container hidden">
-                    <!-- CAMERA ENHANCEMENT STEP 1: Added video wrapper and zoom controls -->
                     <div class="video-wrapper">
                         <video id="videoPreview" class="video-preview" autoplay muted playsinline webkit-playsinline></video>
                         
@@ -636,7 +635,6 @@
                             <div class="zoom-level-indicator" data-zoom-level>1.0x</div>
                         </div>
                     </div>
-                    <!-- END CAMERA ENHANCEMENT STEP 1 -->
                     
                     <div class="camera-controls">
                         <button class="capture-btn" onclick="capturePhoto()">📷</button>
@@ -859,7 +857,6 @@
     </div>
 
     <script>
-        // Configuration
         var CONFIG = {
             SENDGRID_API_KEY: 'SG.demo_key_replace_with_real_key',
             SENDGRID_FROM_EMAIL: 'noreply@receiptlinker.com',
@@ -1066,7 +1063,6 @@
                 video.srcObject = stream;
                 videoStream = stream;
                 
-                // CAMERA ENHANCEMENT STEP 1: Reset zoom when starting camera
                 resetZoom();
                 
                 document.getElementById('camera-interface').classList.remove('hidden');
@@ -1110,7 +1106,6 @@
                 videoStream = null;
             }
             
-            // CAMERA ENHANCEMENT STEP 1: Reset zoom when stopping camera
             resetZoom();
             
             document.getElementById('camera-interface').classList.add('hidden');
@@ -1318,4 +1313,14 @@
             var ctx = canvas.getContext('2d');
             
             ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, canvas.width, canvas
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = '#e5e7eb';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#2d5a3d';
+            ctx.fillRect(0, 0, canvas.width, 60);
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.font
