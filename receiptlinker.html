@@ -205,7 +205,7 @@
             border: 2px solid #2d5a3d;
         }
 
-        /* AUTO-DETECTION CAMERA SYSTEM */
+        /* MANUAL CAPTURE CAMERA SYSTEM */
         .camera-container {
             position: relative;
             width: 100%;
@@ -219,89 +219,143 @@
             background: #000;
         }
 
-        .auto-detection-overlay {
+        .camera-controls {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .capture-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #2d5a3d;
+            border: 4px solid white;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(45, 90, 61, 0.3);
+            margin: 0 10px;
+        }
+
+        .capture-btn:hover {
+            background: #3b6951;
+            transform: scale(1.05);
+        }
+
+        .toggle-btn {
+            background: #6b7280;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-btn.active {
+            background: #f59e0b;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        /* CROP SUGGESTION SYSTEM */
+        .crop-preview-container {
+            position: relative;
+            max-width: 90%;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .crop-preview-container.show {
+            display: block;
+        }
+
+        .crop-image {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #2d5a3d;
+            border-radius: 8px;
+        }
+
+        .crop-overlay {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
             pointer-events: none;
-            z-index: 5;
         }
 
-        .detection-canvas {
-            width: 100%;
-            height: 100%;
+        .crop-boundary {
             position: absolute;
-            top: 0;
-            left: 0;
+            border: 2px dashed #10b981;
+            background: rgba(16, 185, 129, 0.1);
+            pointer-events: all;
         }
 
-        .detection-status {
+        .crop-handle {
             position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            z-index: 10;
+            width: 20px;
+            height: 20px;
+            background: #10b981;
+            border: 2px solid white;
+            border-radius: 50%;
+            cursor: grab;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            touch-action: none;
         }
 
-        .detection-status.detecting {
-            background: rgba(245, 158, 11, 0.9);
+        .crop-handle:active {
+            cursor: grabbing;
+            background: #059669;
         }
 
-        .detection-status.ready {
-            background: rgba(16, 185, 129, 0.9);
-        }
+        .crop-handle.top-left { top: 0; left: 0; }
+        .crop-handle.top-right { top: 0; right: 0; transform: translate(50%, -50%); }
+        .crop-handle.bottom-left { bottom: 0; left: 0; transform: translate(-50%, 50%); }
+        .crop-handle.bottom-right { bottom: 0; right: 0; transform: translate(50%, 50%); }
 
-        .capture-preview {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            z-index: 20;
-        }
-
-        .captured-image {
-            max-width: 90%;
-            max-height: 60%;
-            border: 2px solid #10b981;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .capture-controls {
-            display: flex;
-            gap: 15px;
+        .crop-controls {
+            text-align: center;
             margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
-        .capture-controls button {
-            padding: 10px 20px;
+        .crop-btn {
+            padding: 12px 24px;
             border: none;
             border-radius: 8px;
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.2s ease;
+            font-weight: 500;
         }
 
-        .retake-btn {
-            background: #dc2626;
+        .use-crop-btn {
+            background: #10b981;
             color: white;
         }
 
-        .retake-btn:hover {
-            background: #b91c1c;
+        .use-crop-btn:hover {
+            background: #059669;
+        }
+
+        .use-original-btn {
+            background: #6b7280;
+            color: white;
+        }
+
+        .use-original-btn:hover {
+            background: #4b5563;
         }
 
         .add-page-btn {
@@ -313,28 +367,56 @@
             background: #d97706;
         }
 
-        .save-btn {
-            background: #10b981;
+        .retake-btn {
+            background: #dc2626;
             color: white;
         }
 
-        .save-btn:hover {
-            background: #059669;
+        .retake-btn:hover {
+            background: #b91c1c;
         }
 
-        .multi-page-indicator {
-            position: absolute;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(45, 90, 61, 0.9);
+        .long-receipt-indicator {
+            background: #f59e0b;
             color: white;
-            padding: 6px 12px;
-            border-radius: 15px;
+            padding: 4px 12px;
+            border-radius: 12px;
             font-size: 0.8rem;
-            z-index: 15;
+            margin-top: 10px;
+            display: inline-block;
         }
-        /* END AUTO-DETECTION CAMERA SYSTEM */
+
+        .page-indicator {
+            text-align: center;
+            background: #2d5a3d;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        /* Mobile optimizations for crop system */
+        @media (max-width: 768px) {
+            .crop-handle {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .crop-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .crop-btn {
+                width: 200px;
+                padding: 14px 24px;
+                font-size: 1.1rem;
+            }
+        }
+        /* END MANUAL CAPTURE CAMERA SYSTEM */
 
         .privacy-controls {
             background: white;
@@ -644,25 +726,36 @@
                 </div>
 
                 <div id="camera-interface" class="camera-container hidden">
-                    <video id="videoPreview" class="video-preview" autoplay muted playsinline></video>
-                    <canvas id="detectionCanvas" class="detection-canvas"></canvas>
-                    <div class="auto-detection-overlay">
-                        <div id="detectionStatus" class="detection-status">Positioning receipt...</div>
-                    </div>
-                    <div id="multiPageIndicator" class="multi-page-indicator hidden">Page 1</div>
+                    <video id="videoPreview" class="video-preview" autoplay muted playsinline webkit-playsinline></video>
                     
-                    <div id="capturePreview" class="capture-preview">
-                        <img id="capturedImage" class="captured-image" />
-                        <div class="capture-controls">
-                            <button class="retake-btn" onclick="retakePhoto()">Retake</button>
-                            <button class="add-page-btn" onclick="addPage()">Add Page</button>
-                            <button class="save-btn" onclick="saveCapture()">Save</button>
+                    <div class="camera-controls">
+                        <button class="toggle-btn" id="receiptModeToggle" onclick="toggleReceiptMode()">Standard Receipt</button>
+                        <button class="capture-btn" onclick="capturePhoto()">📷</button>
+                        <button class="camera-button secondary" onclick="stopCamera()">Stop Camera</button>
+                    </div>
+                    
+                    <div id="longReceiptIndicator" class="long-receipt-indicator hidden">Long Receipt Mode (CVS/Pharmacy)</div>
+                </div>
+
+                <div id="crop-preview" class="crop-preview-container">
+                    <img id="cropImage" class="crop-image" />
+                    <div class="crop-overlay">
+                        <div class="crop-boundary" id="cropBoundary">
+                            <div class="crop-handle top-left"></div>
+                            <div class="crop-handle top-right"></div>
+                            <div class="crop-handle bottom-left"></div>
+                            <div class="crop-handle bottom-right"></div>
                         </div>
                     </div>
                     
-                    <div style="text-align: center; margin-top: 1rem;">
-                        <button class="camera-button secondary" onclick="stopCamera()">Stop Camera</button>
+                    <div class="crop-controls">
+                        <button class="crop-btn use-crop-btn" onclick="acceptCrop()">Use This Crop</button>
+                        <button class="crop-btn use-original-btn" onclick="useOriginal()">Use Original</button>
+                        <button class="crop-btn add-page-btn" onclick="addPage()">Add Page</button>
+                        <button class="crop-btn retake-btn" onclick="retakePhoto()">Retake</button>
                     </div>
+                    
+                    <div id="pageIndicator" class="page-indicator hidden">Page 1</div>
                 </div>
 
                 <div id="privacy-processing" class="privacy-controls hidden">
@@ -894,15 +987,15 @@
         var capturedImages = [];
         var allReceipts = [];
         var filteredReceipts = [];
+        var isLongReceiptMode = false;
 
-        // AUTO-DETECTION CAMERA VARIABLES
-        var detectionCanvas = null;
-        var detectionContext = null;
-        var detectionInterval = null;
-        var isDetecting = false;
-        var detectedEdges = null;
-        var stableDetectionCount = 0;
-        var autoCaptureLock = false;
+        // MANUAL CAPTURE + CROP SUGGESTION VARIABLES
+        var cropPreviewActive = false;
+        var originalImageData = null;
+        var cropBounds = { x: 0, y: 0, width: 0, height: 0 };
+        var isDragging = false;
+        var dragHandle = null;
+        var dragOffset = { x: 0, y: 0 };
 
         function initializeApp() {
             loadUserState();
@@ -918,6 +1011,9 @@
             document.getElementById('maxAmount').addEventListener('input', applyAllFilters);
             document.getElementById('sortSelect').addEventListener('change', applyAllFilters);
             document.getElementById('clearFiltersBtn').addEventListener('click', clearAllFilters);
+            
+            // Setup crop handlers
+            setupCropHandlers();
         }
 
         function loadPrivacyStats() {
@@ -1031,21 +1127,21 @@
         function processFile(file) {
             var reader = new FileReader();
             reader.onload = function(e) {
-                currentImage = e.target.result;
-                capturedImages = [currentImage];
-                startPrivacyProcessing();
+                originalImageData = e.target.result;
+                currentImage = originalImageData;
+                showCropSuggestion();
             };
             reader.readAsDataURL(file);
         }
 
-        // AUTO-DETECTION CAMERA SYSTEM FUNCTIONS
+        // MANUAL CAPTURE CAMERA SYSTEM
         function startCamera() {
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
                 showNotification('Camera not supported on this device', 'error');
                 return;
             }
 
-            showNotification('Starting auto-detection camera...', 'info');
+            showNotification('Starting camera...', 'info');
 
             navigator.mediaDevices.getUserMedia({
                 video: {
@@ -1059,11 +1155,8 @@
                 video.srcObject = stream;
                 videoStream = stream;
                 
-                video.onloadedmetadata = function() {
-                    initializeAutoDetection();
-                    document.getElementById('camera-interface').classList.remove('hidden');
-                    showNotification('Position receipt in view - auto-capture enabled', 'success');
-                };
+                document.getElementById('camera-interface').classList.remove('hidden');
+                showNotification('Position receipt and tap capture button', 'success');
             })
             .catch(function(error) {
                 console.error('Camera error:', error);
@@ -1071,267 +1164,44 @@
             });
         }
 
-        function initializeAutoDetection() {
-            var video = document.getElementById('videoPreview');
-            detectionCanvas = document.getElementById('detectionCanvas');
-            detectionContext = detectionCanvas.getContext('2d');
+        function toggleReceiptMode() {
+            isLongReceiptMode = !isLongReceiptMode;
+            var toggleBtn = document.getElementById('receiptModeToggle');
+            var indicator = document.getElementById('longReceiptIndicator');
             
-            // Set canvas size to match video
-            video.addEventListener('loadeddata', function() {
-                detectionCanvas.width = video.videoWidth;
-                detectionCanvas.height = video.videoHeight;
-                
-                // Start edge detection
-                startEdgeDetection();
-            });
-        }
-
-        function startEdgeDetection() {
-            isDetecting = true;
-            detectionInterval = setInterval(function() {
-                performEdgeDetection();
-            }, 200); // Check every 200ms
-        }
-
-        function stopEdgeDetection() {
-            isDetecting = false;
-            if (detectionInterval) {
-                clearInterval(detectionInterval);
-                detectionInterval = null;
-            }
-        }
-
-        function performEdgeDetection() {
-            if (!isDetecting || autoCaptureLock) return;
-            
-            var video = document.getElementById('videoPreview');
-            var statusEl = document.getElementById('detectionStatus');
-            
-            if (video.readyState !== video.HAVE_ENOUGH_DATA) return;
-            
-            // Draw video frame to canvas
-            detectionContext.drawImage(video, 0, 0, detectionCanvas.width, detectionCanvas.height);
-            
-            // Get image data for processing
-            var imageData = detectionContext.getImageData(0, 0, detectionCanvas.width, detectionCanvas.height);
-            
-            // Simple edge detection algorithm
-            var edges = detectDocumentEdges(imageData);
-            
-            if (edges && edges.confidence > 0.7) {
-                // Good detection found
-                stableDetectionCount++;
-                statusEl.textContent = 'Document detected - ' + Math.min(stableDetectionCount, 10) + '/10';
-                statusEl.className = 'detection-status detecting';
-                
-                // Draw detection outline
-                drawDetectionOutline(edges.corners);
-                
-                if (stableDetectionCount >= 10) {
-                    // Auto-capture after stable detection
-                    statusEl.textContent = 'Perfect! Auto-capturing...';
-                    statusEl.className = 'detection-status ready';
-                    autoCapture(edges);
-                }
+            if (isLongReceiptMode) {
+                toggleBtn.textContent = 'Long Receipt';
+                toggleBtn.classList.add('active');
+                indicator.classList.remove('hidden');
             } else {
-                // Reset counter if detection lost
-                stableDetectionCount = Math.max(0, stableDetectionCount - 1);
-                statusEl.textContent = 'Position receipt in view...';
-                statusEl.className = 'detection-status';
-                
-                // Clear detection outline
-                clearDetectionOutline();
+                toggleBtn.textContent = 'Standard Receipt';
+                toggleBtn.classList.remove('active');
+                indicator.classList.add('hidden');
             }
         }
 
-        function detectDocumentEdges(imageData) {
-            // Simplified edge detection algorithm
-            var width = imageData.width;
-            var height = imageData.height;
-            var data = imageData.data;
-            
-            // Convert to grayscale and detect edges
-            var edges = [];
-            var threshold = 100;
-            
-            // Simple rectangular detection
-            var minX = width, maxX = 0, minY = height, maxY = 0;
-            var edgePixels = 0;
-            
-            for (var y = 1; y < height - 1; y++) {
-                for (var x = 1; x < width - 1; x++) {
-                    var idx = (y * width + x) * 4;
-                    
-                    // Simple edge detection using gradient
-                    var gx = Math.abs(data[idx] - data[idx + 4]);
-                    var gy = Math.abs(data[idx] - data[idx + width * 4]);
-                    var magnitude = gx + gy;
-                    
-                    if (magnitude > threshold) {
-                        edgePixels++;
-                        minX = Math.min(minX, x);
-                        maxX = Math.max(maxX, x);
-                        minY = Math.min(minY, y);
-                        maxY = Math.max(maxY, y);
-                    }
-                }
-            }
-            
-            // Check if we found a reasonable document shape
-            var rectWidth = maxX - minX;
-            var rectHeight = maxY - minY;
-            var aspectRatio = rectWidth / rectHeight;
-            
-            if (edgePixels > 1000 && rectWidth > width * 0.3 && rectHeight > height * 0.3) {
-                return {
-                    corners: [
-                        {x: minX, y: minY},
-                        {x: maxX, y: minY},
-                        {x: maxX, y: maxY},
-                        {x: minX, y: maxY}
-                    ],
-                    confidence: Math.min(edgePixels / 5000, 1.0)
-                };
-            }
-            
-            return null;
-        }
-
-        function drawDetectionOutline(corners) {
-            if (!corners) return;
-            
-            detectionContext.strokeStyle = '#10b981';
-            detectionContext.lineWidth = 3;
-            detectionContext.setLineDash([]);
-            
-            detectionContext.beginPath();
-            detectionContext.moveTo(corners[0].x, corners[0].y);
-            for (var i = 1; i < corners.length; i++) {
-                detectionContext.lineTo(corners[i].x, corners[i].y);
-            }
-            detectionContext.closePath();
-            detectionContext.stroke();
-        }
-
-        function clearDetectionOutline() {
+        function capturePhoto() {
             var video = document.getElementById('videoPreview');
-            detectionContext.clearRect(0, 0, detectionCanvas.width, detectionCanvas.height);
-        }
+            if (!video.srcObject) {
+                showNotification('Camera not active', 'error');
+                return;
+            }
 
-        function autoCapture(edgeData) {
-            if (autoCaptureLock) return;
-            autoCaptureLock = true;
-            
-            var video = document.getElementById('videoPreview');
             var canvas = document.createElement('canvas');
             var context = canvas.getContext('2d');
             
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             
-            // Capture the frame
             context.drawImage(video, 0, 0);
             
-            // Crop to detected edges if available
-            var croppedImage = cropToEdges(canvas, edgeData.corners);
+            originalImageData = canvas.toDataURL('image/jpeg', 0.95);
+            currentImage = originalImageData;
             
-            // Show capture preview
-            showCapturePreview(croppedImage);
+            stopCamera();
+            showCropSuggestion();
             
-            showNotification('Receipt captured! Review and save or retake.', 'success');
-        }
-
-        function cropToEdges(canvas, corners) {
-            if (!corners) return canvas.toDataURL('image/jpeg', 0.95);
-            
-            // Find bounding box
-            var minX = Math.min(corners[0].x, corners[1].x, corners[2].x, corners[3].x);
-            var maxX = Math.max(corners[0].x, corners[1].x, corners[2].x, corners[3].x);
-            var minY = Math.min(corners[0].y, corners[1].y, corners[2].y, corners[3].y);
-            var maxY = Math.max(corners[0].y, corners[1].y, corners[2].y, corners[3].y);
-            
-            // Add some padding
-            var padding = 10;
-            minX = Math.max(0, minX - padding);
-            minY = Math.max(0, minY - padding);
-            maxX = Math.min(canvas.width, maxX + padding);
-            maxY = Math.min(canvas.height, maxY + padding);
-            
-            var cropCanvas = document.createElement('canvas');
-            var cropContext = cropCanvas.getContext('2d');
-            
-            cropCanvas.width = maxX - minX;
-            cropCanvas.height = maxY - minY;
-            
-            cropContext.drawImage(canvas, minX, minY, cropCanvas.width, cropCanvas.height, 0, 0, cropCanvas.width, cropCanvas.height);
-            
-            return cropCanvas.toDataURL('image/jpeg', 0.95);
-        }
-
-        function showCapturePreview(imageData) {
-            var preview = document.getElementById('capturePreview');
-            var img = document.getElementById('capturedImage');
-            
-            img.src = imageData;
-            currentImage = imageData;
-            
-            // Stop detection while in preview
-            stopEdgeDetection();
-            
-            preview.style.display = 'flex';
-            updateMultiPageIndicator();
-        }
-
-        function hideCapturePreview() {
-            var preview = document.getElementById('capturePreview');
-            preview.style.display = 'none';
-            
-            // Restart detection
-            autoCaptureLock = false;
-            stableDetectionCount = 0;
-            if (isDetecting) {
-                startEdgeDetection();
-            }
-        }
-
-        function retakePhoto() {
-            hideCapturePreview();
-            showNotification('Ready to capture again', 'info');
-        }
-
-        function addPage() {
-            // Add current image to the collection
-            if (currentImage) {
-                capturedImages.push(currentImage);
-                updateMultiPageIndicator();
-                showNotification('Page ' + capturedImages.length + ' added. Position next page.', 'success');
-            }
-            hideCapturePreview();
-        }
-
-        function saveCapture() {
-            if (currentImage) {
-                if (capturedImages.length === 0) {
-                    capturedImages = [currentImage];
-                } else {
-                    capturedImages.push(currentImage);
-                }
-                
-                stopCamera();
-                startPrivacyProcessing();
-                
-                showNotification('Processing ' + capturedImages.length + ' page(s)...', 'info');
-            }
-        }
-
-        function updateMultiPageIndicator() {
-            var indicator = document.getElementById('multiPageIndicator');
-            if (capturedImages.length > 0) {
-                indicator.textContent = 'Pages: ' + capturedImages.length + ' + current';
-                indicator.classList.remove('hidden');
-            } else {
-                indicator.classList.add('hidden');
-            }
+            showNotification('Photo captured! Review crop suggestion or use original.', 'success');
         }
 
         function stopCamera() {
@@ -1343,18 +1213,258 @@
                 videoStream = null;
             }
             
-            stopEdgeDetection();
             document.getElementById('camera-interface').classList.add('hidden');
-            document.getElementById('capturePreview').style.display = 'none';
-            
-            // Reset capture state
-            autoCaptureLock = false;
-            stableDetectionCount = 0;
-            capturedImages = [];
-            
-            showNotification('Camera stopped', 'info');
         }
-        // END AUTO-DETECTION CAMERA SYSTEM
+
+        // INTELLIGENT CROP SUGGESTION SYSTEM
+        function showCropSuggestion() {
+            var img = document.getElementById('cropImage');
+            img.src = originalImageData;
+            
+            img.onload = function() {
+                // Perform edge detection and suggest crop boundaries
+                var suggestedBounds = detectDocumentBounds(img);
+                setCropBounds(suggestedBounds);
+                
+                document.getElementById('crop-preview').classList.add('show');
+                
+                // Show page indicator if we have multiple pages
+                var indicator = document.getElementById('pageIndicator');
+                var currentPageNum = capturedImages.length + 1;
+                indicator.textContent = 'Page ' + currentPageNum;
+                indicator.classList.remove('hidden');
+                
+                cropPreviewActive = true;
+                
+                var message = capturedImages.length > 0 ? 
+                    'Page ' + currentPageNum + ' ready! Adjust crop or add to collection.' :
+                    'Crop suggestion ready! Adjust handles or use as-is.';
+                showNotification(message, 'info');
+            };
+        }
+
+        function detectDocumentBounds(img) {
+            // Simple edge detection algorithm for crop suggestion
+            // In a real implementation, this would use more sophisticated computer vision
+            
+            var padding = 0.05; // 5% padding from edges
+            var imgWidth = img.naturalWidth;
+            var imgHeight = img.naturalHeight;
+            
+            // For long receipts, suggest a taller crop area
+            var heightRatio = isLongReceiptMode ? 0.9 : 0.8;
+            var widthRatio = 0.8;
+            
+            return {
+                x: imgWidth * padding,
+                y: imgHeight * padding,
+                width: imgWidth * widthRatio,
+                height: imgHeight * heightRatio
+            };
+        }
+
+        function setCropBounds(bounds) {
+            cropBounds = bounds;
+            updateCropBoundaryDisplay();
+        }
+
+        function updateCropBoundaryDisplay() {
+            var img = document.getElementById('cropImage');
+            var boundary = document.getElementById('cropBoundary');
+            
+            var imgRect = img.getBoundingClientRect();
+            var scaleX = imgRect.width / img.naturalWidth;
+            var scaleY = imgRect.height / img.naturalHeight;
+            
+            boundary.style.left = (cropBounds.x * scaleX) + 'px';
+            boundary.style.top = (cropBounds.y * scaleY) + 'px';
+            boundary.style.width = (cropBounds.width * scaleX) + 'px';
+            boundary.style.height = (cropBounds.height * scaleY) + 'px';
+        }
+
+        function setupCropHandlers() {
+            var handles = document.querySelectorAll('.crop-handle');
+            
+            for (var i = 0; i < handles.length; i++) {
+                handles[i].addEventListener('mousedown', startDrag);
+                handles[i].addEventListener('touchstart', startDrag, { passive: false });
+            }
+            
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('touchmove', drag, { passive: false });
+            document.addEventListener('mouseup', endDrag);
+            document.addEventListener('touchend', endDrag);
+            
+            window.addEventListener('resize', updateCropBoundaryDisplay);
+        }
+
+        function startDrag(e) {
+            e.preventDefault();
+            isDragging = true;
+            dragHandle = e.target;
+            
+            var rect = dragHandle.getBoundingClientRect();
+            var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            dragOffset.x = clientX - rect.left;
+            dragOffset.y = clientY - rect.top;
+        }
+
+        function drag(e) {
+            if (!isDragging || !dragHandle) return;
+            e.preventDefault();
+            
+            var img = document.getElementById('cropImage');
+            var imgRect = img.getBoundingClientRect();
+            
+            var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            var relativeX = clientX - imgRect.left - dragOffset.x;
+            var relativeY = clientY - imgRect.top - dragOffset.y;
+            
+            var scaleX = img.naturalWidth / imgRect.width;
+            var scaleY = img.naturalHeight / imgRect.height;
+            
+            var actualX = relativeX * scaleX;
+            var actualY = relativeY * scaleY;
+            
+            // Update crop bounds based on which handle is being dragged
+            if (dragHandle.classList.contains('top-left')) {
+                cropBounds.width += cropBounds.x - actualX;
+                cropBounds.height += cropBounds.y - actualY;
+                cropBounds.x = actualX;
+                cropBounds.y = actualY;
+            } else if (dragHandle.classList.contains('top-right')) {
+                cropBounds.width = actualX - cropBounds.x;
+                cropBounds.height += cropBounds.y - actualY;
+                cropBounds.y = actualY;
+            } else if (dragHandle.classList.contains('bottom-left')) {
+                cropBounds.width += cropBounds.x - actualX;
+                cropBounds.height = actualY - cropBounds.y;
+                cropBounds.x = actualX;
+            } else if (dragHandle.classList.contains('bottom-right')) {
+                cropBounds.width = actualX - cropBounds.x;
+                cropBounds.height = actualY - cropBounds.y;
+            }
+            
+            // Constrain bounds to image dimensions
+            cropBounds.x = Math.max(0, Math.min(cropBounds.x, img.naturalWidth));
+            cropBounds.y = Math.max(0, Math.min(cropBounds.y, img.naturalHeight));
+            cropBounds.width = Math.max(50, Math.min(cropBounds.width, img.naturalWidth - cropBounds.x));
+            cropBounds.height = Math.max(50, Math.min(cropBounds.height, img.naturalHeight - cropBounds.y));
+            
+            updateCropBoundaryDisplay();
+        }
+
+        function endDrag() {
+            isDragging = false;
+            dragHandle = null;
+        }
+
+        function acceptCrop() {
+            if (!originalImageData) return;
+            
+            // Create cropped image
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            var img = new Image();
+            
+            img.onload = function() {
+                canvas.width = cropBounds.width;
+                canvas.height = cropBounds.height;
+                
+                context.drawImage(
+                    img,
+                    cropBounds.x, cropBounds.y, cropBounds.width, cropBounds.height,
+                    0, 0, cropBounds.width, cropBounds.height
+                );
+                
+                currentImage = canvas.toDataURL('image/jpeg', 0.95);
+                hideCropPreview();
+                startPrivacyProcessing();
+                
+                showNotification('Crop applied! Processing privacy protection...', 'success');
+            };
+            
+            img.src = originalImageData;
+        }
+
+        function useOriginal() {
+            currentImage = originalImageData;
+            hideCropPreview();
+            startPrivacyProcessing();
+            
+            showNotification('Using original image! Processing privacy protection...', 'success');
+        }
+
+        function addPage() {
+            if (!originalImageData) return;
+            
+            var imageToAdd;
+            
+            // Determine which image to add (cropped or original)
+            if (cropBounds && cropBounds.width > 0) {
+                // Create cropped image
+                var canvas = document.createElement('canvas');
+                var context = canvas.getContext('2d');
+                var img = new Image();
+                
+                img.onload = function() {
+                    canvas.width = cropBounds.width;
+                    canvas.height = cropBounds.height;
+                    
+                    context.drawImage(
+                        img,
+                        cropBounds.x, cropBounds.y, cropBounds.width, cropBounds.height,
+                        0, 0, cropBounds.width, cropBounds.height
+                    );
+                    
+                    imageToAdd = canvas.toDataURL('image/jpeg', 0.95);
+                    capturedImages.push(imageToAdd);
+                    
+                    hideCropPreview();
+                    startCamera();
+                    updatePageIndicator();
+                    
+                    showNotification('Page ' + capturedImages.length + ' added. Position next page.', 'success');
+                };
+                
+                img.src = originalImageData;
+            } else {
+                // Use original image
+                imageToAdd = originalImageData;
+                capturedImages.push(imageToAdd);
+                
+                hideCropPreview();
+                startCamera();
+                updatePageIndicator();
+                
+                showNotification('Page ' + capturedImages.length + ' added. Position next page.', 'success');
+            }
+        }
+
+        function retakePhoto() {
+            hideCropPreview();
+            currentImage = null;
+            originalImageData = null;
+            
+            showNotification('Ready to capture another photo', 'info');
+        }
+
+        function hideCropPreview() {
+            document.getElementById('crop-preview').classList.remove('show');
+            document.getElementById('pageIndicator').classList.add('hidden');
+            cropPreviewActive = false;
+        }
+
+        function updatePageIndicator() {
+            var indicator = document.getElementById('pageIndicator');
+            var nextPageNum = capturedImages.length + 1;
+            indicator.textContent = 'Page ' + nextPageNum;
+            indicator.classList.remove('hidden');
+        }
 
         function startPrivacyProcessing() {
             showNotification('Analyzing receipt for private information...', 'info');
@@ -1384,12 +1494,25 @@
         }
 
         function confirmUpload() {
-            if (!currentImage) {
-                showNotification('No image to upload', 'error');
+            var imagesToProcess = [];
+            
+            // Add all previously captured pages
+            if (capturedImages.length > 0) {
+                imagesToProcess = capturedImages.slice();
+            }
+            
+            // Add current image if it exists
+            if (currentImage) {
+                imagesToProcess.push(currentImage);
+            }
+
+            if (imagesToProcess.length === 0) {
+                showNotification('No images to upload', 'error');
                 return;
             }
 
-            showNotification('Saving your privacy-protected receipt...', 'info');
+            var pageText = imagesToProcess.length === 1 ? 'receipt' : imagesToProcess.length + '-page receipt';
+            showNotification('Saving your privacy-protected ' + pageText + '...', 'info');
 
             setTimeout(function() {
                 var receiptId = 'receipt_' + Date.now();
@@ -1399,17 +1522,21 @@
                     id: receiptId,
                     userId: currentUser.email,
                     timestamp: new Date().toISOString(),
-                    imageData: currentImage,
+                    imageData: imagesToProcess[0], // Primary image for thumbnail
+                    images: imagesToProcess, // All pages
                     url: receiptUrl,
-                    redactionCount: 3,
-                    pageCount: capturedImages.length
+                    redactionCount: 3 * imagesToProcess.length, // Scale with pages
+                    pageCount: imagesToProcess.length
                 };
 
                 saveReceiptToStorage(receipt);
                 sendReceiptConfirmationEmail(receipt);
                 showUploadSuccess(receipt);
                 
-                showNotification('Receipt uploaded and emailed!', 'success');
+                var message = imagesToProcess.length === 1 ? 
+                    'Receipt uploaded and emailed!' :
+                    imagesToProcess.length + '-page receipt uploaded and emailed!';
+                showNotification(message, 'success');
             }, 2000);
         }
 
@@ -1425,10 +1552,38 @@
         function sendReceiptConfirmationEmail(receipt) {
             showNotification('Sending email confirmation...', 'info');
             
+            var uploadDate = new Date(receipt.timestamp).toLocaleDateString();
+            
             var emailData = {
                 to: currentUser.email,
                 subject: 'Receipt Saved & Privacy-Protected!',
-                html: createReceiptEmailTemplate(receipt)
+                html: '<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f9f9f9; padding: 20px;">' +
+                    '<div style="background: white; padding: 30px; border-radius: 10px;">' +
+                    '<div style="text-align: center; margin-bottom: 30px;">' +
+                    '<h1 style="color: #2d5a3d; margin: 0;">ReceiptLinker</h1>' +
+                    '<p style="color: #6b7280; margin: 5px 0;">Privacy-First Receipt Storage</p>' +
+                    '</div>' +
+                    '<div style="background: #f0f9f4; padding: 20px; border-radius: 8px; margin-bottom: 20px;">' +
+                    '<h2 style="color: #2d5a3d; margin-top: 0;">Receipt Successfully Saved!</h2>' +
+                    '<p style="color: #374151;">Your receipt has been privacy-protected and is ready to use.</p>' +
+                    '</div>' +
+                    '<div style="margin-bottom: 20px;">' +
+                    '<h3 style="color: #2d5a3d;">Privacy Protection Applied</h3>' +
+                    '<p style="color: #374151;">' + receipt.redactionCount + ' sensitive items were automatically detected and redacted before storage.</p>' +
+                    '</div>' +
+                    '<div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin-bottom: 20px;">' +
+                    '<h3 style="color: #0369a1; margin-top: 0;">Your Permanent URL:</h3>' +
+                    '<p style="word-break: break-all; background: white; padding: 10px; border-radius: 5px; margin: 10px 0;">' +
+                    '<a href="' + receipt.url + '" style="color: #2d5a3d; text-decoration: none;">' + receipt.url + '</a>' +
+                    '</p>' +
+                    '<p style="color: #0369a1; font-size: 14px; margin: 0;">This link works forever and can be shared with customer service for returns/warranties!</p>' +
+                    '</div>' +
+                    '<div style="border-top: 1px solid #e5e7eb; padding-top: 20px; margin-top: 20px;">' +
+                    '<p style="color: #6b7280; font-size: 14px; margin: 0;"><strong>Upload Date:</strong> ' + uploadDate + '</p>' +
+                    '<p style="color: #6b7280; font-size: 14px; margin: 5px 0 0 0;"><strong>Status:</strong> Privacy-Protected (' + (receipt.pageCount || 1) + ' page)</p>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>'
             };
 
             console.log('EMAIL DEMO - Would send:', emailData);
@@ -1438,54 +1593,13 @@
             }, 1500);
         }
 
-        function createReceiptEmailTemplate(receipt) {
-            var uploadDate = new Date(receipt.timestamp).toLocaleDateString();
-            
-            return '<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f9f9f9; padding: 20px;">' +
-                '<div style="background: white; padding: 30px; border-radius: 10px;">' +
-                '<div style="text-align: center; margin-bottom: 30px;">' +
-                '<h1 style="color: #2d5a3d; margin: 0;">ReceiptLinker</h1>' +
-                '<p style="color: #6b7280; margin: 5px 0;">Privacy-First Receipt Storage</p>' +
-                '</div>' +
-                
-                '<div style="background: #f0f9f4; padding: 20px; border-radius: 8px; margin-bottom: 20px;">' +
-                '<h2 style="color: #2d5a3d; margin-top: 0;">Receipt Successfully Saved!</h2>' +
-                '<p style="color: #374151;">Your receipt has been privacy-protected and is ready to use.</p>' +
-                '</div>' +
-                
-                '<div style="margin-bottom: 20px;">' +
-                '<h3 style="color: #2d5a3d;">Privacy Protection Applied</h3>' +
-                '<p style="color: #374151;">' + receipt.redactionCount + ' sensitive items were automatically detected and redacted before storage.</p>' +
-                '</div>' +
-                
-                '<div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin-bottom: 20px;">' +
-                '<h3 style="color: #0369a1; margin-top: 0;">Your Permanent URL:</h3>' +
-                '<p style="word-break: break-all; background: white; padding: 10px; border-radius: 5px; margin: 10px 0;">' +
-                '<a href="' + receipt.url + '" style="color: #2d5a3d; text-decoration: none;">' + receipt.url + '</a>' +
-                '</p>' +
-                '<p style="color: #0369a1; font-size: 14px; margin: 0;">This link works forever and can be shared with customer service for returns/warranties!</p>' +
-                '</div>' +
-                
-                '<div style="border-top: 1px solid #e5e7eb; padding-top: 20px; margin-top: 20px;">' +
-                '<p style="color: #6b7280; font-size: 14px; margin: 0;"><strong>Upload Date:</strong> ' + uploadDate + '</p>' +
-                '<p style="color: #6b7280; font-size: 14px; margin: 5px 0 0 0;"><strong>Status:</strong> Privacy-Protected (' + (receipt.pageCount || 1) + ' pages)</p>' +
-                '</div>' +
-                
-                '<div style="text-align: center; margin-top: 30px;">' +
-                '<p style="color: #6b7280; font-size: 12px;">This email was sent by ReceiptLinker.<br>Your privacy is our priority - no personal information is stored.</p>' +
-                '</div>' +
-                '</div>' +
-                '</div>';
-        }
-
         function showUploadSuccess(receipt) {
             document.getElementById('upload-success').innerHTML = 
                 '<div style="background: white; padding: 2rem; border-radius: 1rem; text-align: center; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">' +
                 '<h3 style="color: #2d5a3d; margin-bottom: 1rem;">Receipt Saved & Email Sent!</h3>' +
-                '<p style="margin-bottom: 1rem;">Your ' + (receipt.pageCount || 1) + '-page receipt has been privacy-protected and saved successfully.</p>' +
+                '<p style="margin-bottom: 1rem;">Your receipt has been privacy-protected and saved successfully.</p>' +
                 '<div style="background: #f0f9f4; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">' +
                 '<strong style="color: #2d5a3d;">Privacy Protection Applied:</strong> ' + receipt.redactionCount + ' items automatically redacted<br>' +
-                '<strong style="color: #2d5a3d;">Pages Processed:</strong> ' + (receipt.pageCount || 1) + '<br>' +
                 '<strong style="color: #2d5a3d;">Email Sent To:</strong> ' + currentUser.email + '<br>' +
                 '<small style="color: #6b7280;">Check your inbox for the permanent URL!</small>' +
                 '</div>' +
@@ -1520,8 +1634,9 @@
         function cancelUpload() {
             document.getElementById('privacy-processing').classList.add('hidden');
             document.getElementById('upload-success').classList.add('hidden');
+            hideCropPreview();
             currentImage = null;
-            capturedImages = [];
+            originalImageData = null;
         }
 
         function loadGallery() {
