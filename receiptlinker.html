@@ -205,7 +205,6 @@
             border: 2px solid #2d5a3d;
         }
 
-        /* MANUAL CAPTURE CAMERA SYSTEM */
         .camera-container {
             position: relative;
             width: 100%;
@@ -243,180 +242,82 @@
             transform: scale(1.05);
         }
 
-        .toggle-btn {
-            background: #6b7280;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            margin: 0 10px;
-            transition: all 0.2s ease;
-        }
-
-        .toggle-btn.active {
-            background: #f59e0b;
-        }
-
-        .toggle-btn:hover {
-            opacity: 0.8;
-        }
-
-        /* CROP SUGGESTION SYSTEM */
-        .crop-preview-container {
-            position: relative;
-            max-width: 90%;
-            margin: 0 auto;
-            display: none;
-        }
-
-        .crop-preview-container.show {
-            display: block;
-        }
-
-        .crop-image {
-            max-width: 100%;
-            height: auto;
-            border: 2px solid #2d5a3d;
-            border-radius: 8px;
-        }
-
-        .crop-overlay {
+        /* CAMERA ENHANCEMENT STEP 1: ZOOM CONTROLS */
+        .zoom-controls {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-        }
-
-        .crop-boundary {
-            position: absolute;
-            border: 2px dashed #10b981;
-            background: rgba(16, 185, 129, 0.1);
-            pointer-events: all;
-        }
-
-        .crop-handle {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #10b981;
-            border: 2px solid white;
-            border-radius: 50%;
-            cursor: grab;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            touch-action: none;
-        }
-
-        .crop-handle:active {
-            cursor: grabbing;
-            background: #059669;
-        }
-
-        .crop-handle.top-left { top: 0; left: 0; }
-        .crop-handle.top-right { top: 0; right: 0; transform: translate(50%, -50%); }
-        .crop-handle.bottom-left { bottom: 0; left: 0; transform: translate(-50%, 50%); }
-        .crop-handle.bottom-right { bottom: 0; right: 0; transform: translate(50%, 50%); }
-
-        .crop-controls {
-            text-align: center;
-            margin-top: 20px;
+            top: 1rem;
+            right: 1rem;
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 0.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            z-index: 10;
         }
 
-        .crop-btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
+        .zoom-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2d5a3d;
+            border: 2px solid white;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.2s ease;
-            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
-        .use-crop-btn {
-            background: #10b981;
+        .zoom-button:hover {
+            background: #3b6951;
+            transform: scale(1.1);
+        }
+
+        .zoom-button:active {
+            transform: scale(0.95);
+        }
+
+        .zoom-level-indicator {
+            background: rgba(0, 0, 0, 0.7);
             color: white;
-        }
-
-        .use-crop-btn:hover {
-            background: #059669;
-        }
-
-        .use-original-btn {
-            background: #6b7280;
-            color: white;
-        }
-
-        .use-original-btn:hover {
-            background: #4b5563;
-        }
-
-        .add-page-btn {
-            background: #f59e0b;
-            color: white;
-        }
-
-        .add-page-btn:hover {
-            background: #d97706;
-        }
-
-        .retake-btn {
-            background: #dc2626;
-            color: white;
-        }
-
-        .retake-btn:hover {
-            background: #b91c1c;
-        }
-
-        .long-receipt-indicator {
-            background: #f59e0b;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
             font-size: 0.8rem;
-            margin-top: 10px;
-            display: inline-block;
-        }
-
-        .page-indicator {
             text-align: center;
-            background: #2d5a3d;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-top: 15px;
-            display: inline-block;
-            font-weight: 500;
+            margin-top: 0.25rem;
         }
 
-        /* Mobile optimizations for crop system */
+        .video-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+
+        .video-preview.zoomed {
+            transition: transform 0.3s ease;
+            transform-origin: center center;
+        }
+
+        /* Mobile optimizations for zoom controls */
         @media (max-width: 768px) {
-            .crop-handle {
-                width: 30px;
-                height: 30px;
+            .zoom-controls {
+                top: 0.5rem;
+                right: 0.5rem;
+                padding: 0.5rem;
             }
             
-            .crop-controls {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .crop-btn {
-                width: 200px;
-                padding: 14px 24px;
-                font-size: 1.1rem;
+            .zoom-button {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
             }
         }
-        /* END MANUAL CAPTURE CAMERA SYSTEM */
+        /* END CAMERA ENHANCEMENT STEP 1 */
 
         .privacy-controls {
             background: white;
@@ -559,7 +460,6 @@
             margin-top: 0.25rem;
         }
 
-        /* SEARCH HIGHLIGHTING CSS */
         .search-highlight {
             background: #fef3c7;
             color: #92400e;
@@ -726,36 +626,22 @@
                 </div>
 
                 <div id="camera-interface" class="camera-container hidden">
-                    <video id="videoPreview" class="video-preview" autoplay muted playsinline webkit-playsinline></video>
+                    <!-- CAMERA ENHANCEMENT STEP 1: Added video wrapper and zoom controls -->
+                    <div class="video-wrapper">
+                        <video id="videoPreview" class="video-preview" autoplay muted playsinline webkit-playsinline></video>
+                        
+                        <div class="zoom-controls" data-camera-zoom-controls>
+                            <button class="zoom-button" data-zoom-in onclick="zoomIn()">+</button>
+                            <button class="zoom-button" data-zoom-out onclick="zoomOut()">-</button>
+                            <div class="zoom-level-indicator" data-zoom-level>1.0x</div>
+                        </div>
+                    </div>
+                    <!-- END CAMERA ENHANCEMENT STEP 1 -->
                     
                     <div class="camera-controls">
-                        <button class="toggle-btn" id="receiptModeToggle" onclick="toggleReceiptMode()">Standard Receipt</button>
                         <button class="capture-btn" onclick="capturePhoto()">📷</button>
                         <button class="camera-button secondary" onclick="stopCamera()">Stop Camera</button>
                     </div>
-                    
-                    <div id="longReceiptIndicator" class="long-receipt-indicator hidden">Long Receipt Mode (CVS/Pharmacy)</div>
-                </div>
-
-                <div id="crop-preview" class="crop-preview-container">
-                    <img id="cropImage" class="crop-image" />
-                    <div class="crop-overlay">
-                        <div class="crop-boundary" id="cropBoundary">
-                            <div class="crop-handle top-left"></div>
-                            <div class="crop-handle top-right"></div>
-                            <div class="crop-handle bottom-left"></div>
-                            <div class="crop-handle bottom-right"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="crop-controls">
-                        <button class="crop-btn use-crop-btn" onclick="acceptCrop()">Use This Crop</button>
-                        <button class="crop-btn use-original-btn" onclick="useOriginal()">Use Original</button>
-                        <button class="crop-btn add-page-btn" onclick="addPage()">Add Page</button>
-                        <button class="crop-btn retake-btn" onclick="retakePhoto()">Retake</button>
-                    </div>
-                    
-                    <div id="pageIndicator" class="page-indicator hidden">Page 1</div>
                 </div>
 
                 <div id="privacy-processing" class="privacy-controls hidden">
@@ -984,18 +870,54 @@
         var currentTier = 'free';
         var videoStream = null;
         var currentImage = null;
-        var capturedImages = [];
         var allReceipts = [];
         var filteredReceipts = [];
-        var isLongReceiptMode = false;
 
-        // MANUAL CAPTURE + CROP SUGGESTION VARIABLES
-        var cropPreviewActive = false;
-        var originalImageData = null;
-        var cropBounds = { x: 0, y: 0, width: 0, height: 0 };
-        var isDragging = false;
-        var dragHandle = null;
-        var dragOffset = { x: 0, y: 0 };
+        // CAMERA ENHANCEMENT STEP 1: ZOOM FUNCTIONALITY
+        var currentZoom = 1.0;
+        var maxZoom = 3.0;
+        var minZoom = 1.0;
+        var zoomStep = 0.25;
+
+        function zoomIn() {
+            if (currentZoom < maxZoom) {
+                currentZoom = Math.min(currentZoom + zoomStep, maxZoom);
+                applyZoom();
+                updateZoomIndicator();
+                showNotification('Zoom: ' + currentZoom.toFixed(1) + 'x', 'info');
+            }
+        }
+
+        function zoomOut() {
+            if (currentZoom > minZoom) {
+                currentZoom = Math.max(currentZoom - zoomStep, minZoom);
+                applyZoom();
+                updateZoomIndicator();
+                showNotification('Zoom: ' + currentZoom.toFixed(1) + 'x', 'info');
+            }
+        }
+
+        function applyZoom() {
+            var video = document.getElementById('videoPreview');
+            if (video) {
+                video.style.transform = 'scale(' + currentZoom + ')';
+                video.classList.add('zoomed');
+            }
+        }
+
+        function updateZoomIndicator() {
+            var indicator = document.querySelector('[data-zoom-level]');
+            if (indicator) {
+                indicator.textContent = currentZoom.toFixed(1) + 'x';
+            }
+        }
+
+        function resetZoom() {
+            currentZoom = 1.0;
+            applyZoom();
+            updateZoomIndicator();
+        }
+        // END CAMERA ENHANCEMENT STEP 1
 
         function initializeApp() {
             loadUserState();
@@ -1011,9 +933,6 @@
             document.getElementById('maxAmount').addEventListener('input', applyAllFilters);
             document.getElementById('sortSelect').addEventListener('change', applyAllFilters);
             document.getElementById('clearFiltersBtn').addEventListener('click', clearAllFilters);
-            
-            // Setup crop handlers
-            setupCropHandlers();
         }
 
         function loadPrivacyStats() {
@@ -1073,21 +992,18 @@
                 return;
             }
             
-            showNotification('Sending verification code...', 'info');
+            showNotification('Welcome to ReceiptLinker! Email delivery enabled.', 'success');
             
-            setTimeout(function() {
-                currentUser = {
-                    email: email,
-                    tier: 'free',
-                    verified: true,
-                    created: new Date().toISOString()
-                };
-                
-                saveUserState();
-                updateUserStatus();
-                checkUploadAuth();
-                showNotification('Welcome to ReceiptLinker! Email delivery enabled.', 'success');
-            }, 2000);
+            currentUser = {
+                email: email,
+                tier: 'free',
+                verified: true,
+                created: new Date().toISOString()
+            };
+            
+            saveUserState();
+            updateUserStatus();
+            checkUploadAuth();
         }
 
         function gallerySignIn() {
@@ -1097,20 +1013,17 @@
                 return;
             }
             
-            showNotification('Looking up your account...', 'info');
+            showNotification('Gallery access granted!', 'success');
             
-            setTimeout(function() {
-                currentUser = {
-                    email: email,
-                    tier: 'free',
-                    verified: true
-                };
-                
-                saveUserState();
-                updateUserStatus();
-                checkGalleryAuth();
-                showNotification('Gallery access granted!', 'success');
-            }, 1500);
+            currentUser = {
+                email: email,
+                tier: 'free',
+                verified: true
+            };
+            
+            saveUserState();
+            updateUserStatus();
+            checkGalleryAuth();
         }
 
         function triggerFileUpload() {
@@ -1127,14 +1040,12 @@
         function processFile(file) {
             var reader = new FileReader();
             reader.onload = function(e) {
-                originalImageData = e.target.result;
-                currentImage = originalImageData;
-                showCropSuggestion();
+                currentImage = e.target.result;
+                startPrivacyProcessing();
             };
             reader.readAsDataURL(file);
         }
 
-        // MANUAL CAPTURE CAMERA SYSTEM
         function startCamera() {
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
                 showNotification('Camera not supported on this device', 'error');
@@ -1155,29 +1066,16 @@
                 video.srcObject = stream;
                 videoStream = stream;
                 
+                // CAMERA ENHANCEMENT STEP 1: Reset zoom when starting camera
+                resetZoom();
+                
                 document.getElementById('camera-interface').classList.remove('hidden');
-                showNotification('Position receipt and tap capture button', 'success');
+                showNotification('Camera ready! Use zoom controls to adjust view', 'success');
             })
             .catch(function(error) {
                 console.error('Camera error:', error);
                 showNotification('Camera access denied. Please allow camera access.', 'error');
             });
-        }
-
-        function toggleReceiptMode() {
-            isLongReceiptMode = !isLongReceiptMode;
-            var toggleBtn = document.getElementById('receiptModeToggle');
-            var indicator = document.getElementById('longReceiptIndicator');
-            
-            if (isLongReceiptMode) {
-                toggleBtn.textContent = 'Long Receipt';
-                toggleBtn.classList.add('active');
-                indicator.classList.remove('hidden');
-            } else {
-                toggleBtn.textContent = 'Standard Receipt';
-                toggleBtn.classList.remove('active');
-                indicator.classList.add('hidden');
-            }
         }
 
         function capturePhoto() {
@@ -1195,13 +1093,12 @@
             
             context.drawImage(video, 0, 0);
             
-            originalImageData = canvas.toDataURL('image/jpeg', 0.95);
-            currentImage = originalImageData;
+            currentImage = canvas.toDataURL('image/jpeg', 0.95);
             
             stopCamera();
-            showCropSuggestion();
+            startPrivacyProcessing();
             
-            showNotification('Photo captured! Review crop suggestion or use original.', 'success');
+            showNotification('Photo captured! Processing privacy protection...', 'success');
         }
 
         function stopCamera() {
@@ -1213,257 +1110,10 @@
                 videoStream = null;
             }
             
+            // CAMERA ENHANCEMENT STEP 1: Reset zoom when stopping camera
+            resetZoom();
+            
             document.getElementById('camera-interface').classList.add('hidden');
-        }
-
-        // INTELLIGENT CROP SUGGESTION SYSTEM
-        function showCropSuggestion() {
-            var img = document.getElementById('cropImage');
-            img.src = originalImageData;
-            
-            img.onload = function() {
-                // Perform edge detection and suggest crop boundaries
-                var suggestedBounds = detectDocumentBounds(img);
-                setCropBounds(suggestedBounds);
-                
-                document.getElementById('crop-preview').classList.add('show');
-                
-                // Show page indicator if we have multiple pages
-                var indicator = document.getElementById('pageIndicator');
-                var currentPageNum = capturedImages.length + 1;
-                indicator.textContent = 'Page ' + currentPageNum;
-                indicator.classList.remove('hidden');
-                
-                cropPreviewActive = true;
-                
-                var message = capturedImages.length > 0 ? 
-                    'Page ' + currentPageNum + ' ready! Adjust crop or add to collection.' :
-                    'Crop suggestion ready! Adjust handles or use as-is.';
-                showNotification(message, 'info');
-            };
-        }
-
-        function detectDocumentBounds(img) {
-            // Simple edge detection algorithm for crop suggestion
-            // In a real implementation, this would use more sophisticated computer vision
-            
-            var padding = 0.05; // 5% padding from edges
-            var imgWidth = img.naturalWidth;
-            var imgHeight = img.naturalHeight;
-            
-            // For long receipts, suggest a taller crop area
-            var heightRatio = isLongReceiptMode ? 0.9 : 0.8;
-            var widthRatio = 0.8;
-            
-            return {
-                x: imgWidth * padding,
-                y: imgHeight * padding,
-                width: imgWidth * widthRatio,
-                height: imgHeight * heightRatio
-            };
-        }
-
-        function setCropBounds(bounds) {
-            cropBounds = bounds;
-            updateCropBoundaryDisplay();
-        }
-
-        function updateCropBoundaryDisplay() {
-            var img = document.getElementById('cropImage');
-            var boundary = document.getElementById('cropBoundary');
-            
-            var imgRect = img.getBoundingClientRect();
-            var scaleX = imgRect.width / img.naturalWidth;
-            var scaleY = imgRect.height / img.naturalHeight;
-            
-            boundary.style.left = (cropBounds.x * scaleX) + 'px';
-            boundary.style.top = (cropBounds.y * scaleY) + 'px';
-            boundary.style.width = (cropBounds.width * scaleX) + 'px';
-            boundary.style.height = (cropBounds.height * scaleY) + 'px';
-        }
-
-        function setupCropHandlers() {
-            var handles = document.querySelectorAll('.crop-handle');
-            
-            for (var i = 0; i < handles.length; i++) {
-                handles[i].addEventListener('mousedown', startDrag);
-                handles[i].addEventListener('touchstart', startDrag, { passive: false });
-            }
-            
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('touchmove', drag, { passive: false });
-            document.addEventListener('mouseup', endDrag);
-            document.addEventListener('touchend', endDrag);
-            
-            window.addEventListener('resize', updateCropBoundaryDisplay);
-        }
-
-        function startDrag(e) {
-            e.preventDefault();
-            isDragging = true;
-            dragHandle = e.target;
-            
-            var rect = dragHandle.getBoundingClientRect();
-            var clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            var clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            
-            dragOffset.x = clientX - rect.left;
-            dragOffset.y = clientY - rect.top;
-        }
-
-        function drag(e) {
-            if (!isDragging || !dragHandle) return;
-            e.preventDefault();
-            
-            var img = document.getElementById('cropImage');
-            var imgRect = img.getBoundingClientRect();
-            
-            var clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            var clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            
-            var relativeX = clientX - imgRect.left - dragOffset.x;
-            var relativeY = clientY - imgRect.top - dragOffset.y;
-            
-            var scaleX = img.naturalWidth / imgRect.width;
-            var scaleY = img.naturalHeight / imgRect.height;
-            
-            var actualX = relativeX * scaleX;
-            var actualY = relativeY * scaleY;
-            
-            // Update crop bounds based on which handle is being dragged
-            if (dragHandle.classList.contains('top-left')) {
-                cropBounds.width += cropBounds.x - actualX;
-                cropBounds.height += cropBounds.y - actualY;
-                cropBounds.x = actualX;
-                cropBounds.y = actualY;
-            } else if (dragHandle.classList.contains('top-right')) {
-                cropBounds.width = actualX - cropBounds.x;
-                cropBounds.height += cropBounds.y - actualY;
-                cropBounds.y = actualY;
-            } else if (dragHandle.classList.contains('bottom-left')) {
-                cropBounds.width += cropBounds.x - actualX;
-                cropBounds.height = actualY - cropBounds.y;
-                cropBounds.x = actualX;
-            } else if (dragHandle.classList.contains('bottom-right')) {
-                cropBounds.width = actualX - cropBounds.x;
-                cropBounds.height = actualY - cropBounds.y;
-            }
-            
-            // Constrain bounds to image dimensions
-            cropBounds.x = Math.max(0, Math.min(cropBounds.x, img.naturalWidth));
-            cropBounds.y = Math.max(0, Math.min(cropBounds.y, img.naturalHeight));
-            cropBounds.width = Math.max(50, Math.min(cropBounds.width, img.naturalWidth - cropBounds.x));
-            cropBounds.height = Math.max(50, Math.min(cropBounds.height, img.naturalHeight - cropBounds.y));
-            
-            updateCropBoundaryDisplay();
-        }
-
-        function endDrag() {
-            isDragging = false;
-            dragHandle = null;
-        }
-
-        function acceptCrop() {
-            if (!originalImageData) return;
-            
-            // Create cropped image
-            var canvas = document.createElement('canvas');
-            var context = canvas.getContext('2d');
-            var img = new Image();
-            
-            img.onload = function() {
-                canvas.width = cropBounds.width;
-                canvas.height = cropBounds.height;
-                
-                context.drawImage(
-                    img,
-                    cropBounds.x, cropBounds.y, cropBounds.width, cropBounds.height,
-                    0, 0, cropBounds.width, cropBounds.height
-                );
-                
-                currentImage = canvas.toDataURL('image/jpeg', 0.95);
-                hideCropPreview();
-                startPrivacyProcessing();
-                
-                showNotification('Crop applied! Processing privacy protection...', 'success');
-            };
-            
-            img.src = originalImageData;
-        }
-
-        function useOriginal() {
-            currentImage = originalImageData;
-            hideCropPreview();
-            startPrivacyProcessing();
-            
-            showNotification('Using original image! Processing privacy protection...', 'success');
-        }
-
-        function addPage() {
-            if (!originalImageData) return;
-            
-            var imageToAdd;
-            
-            // Determine which image to add (cropped or original)
-            if (cropBounds && cropBounds.width > 0) {
-                // Create cropped image
-                var canvas = document.createElement('canvas');
-                var context = canvas.getContext('2d');
-                var img = new Image();
-                
-                img.onload = function() {
-                    canvas.width = cropBounds.width;
-                    canvas.height = cropBounds.height;
-                    
-                    context.drawImage(
-                        img,
-                        cropBounds.x, cropBounds.y, cropBounds.width, cropBounds.height,
-                        0, 0, cropBounds.width, cropBounds.height
-                    );
-                    
-                    imageToAdd = canvas.toDataURL('image/jpeg', 0.95);
-                    capturedImages.push(imageToAdd);
-                    
-                    hideCropPreview();
-                    startCamera();
-                    updatePageIndicator();
-                    
-                    showNotification('Page ' + capturedImages.length + ' added. Position next page.', 'success');
-                };
-                
-                img.src = originalImageData;
-            } else {
-                // Use original image
-                imageToAdd = originalImageData;
-                capturedImages.push(imageToAdd);
-                
-                hideCropPreview();
-                startCamera();
-                updatePageIndicator();
-                
-                showNotification('Page ' + capturedImages.length + ' added. Position next page.', 'success');
-            }
-        }
-
-        function retakePhoto() {
-            hideCropPreview();
-            currentImage = null;
-            originalImageData = null;
-            
-            showNotification('Ready to capture another photo', 'info');
-        }
-
-        function hideCropPreview() {
-            document.getElementById('crop-preview').classList.remove('show');
-            document.getElementById('pageIndicator').classList.add('hidden');
-            cropPreviewActive = false;
-        }
-
-        function updatePageIndicator() {
-            var indicator = document.getElementById('pageIndicator');
-            var nextPageNum = capturedImages.length + 1;
-            indicator.textContent = 'Page ' + nextPageNum;
-            indicator.classList.remove('hidden');
         }
 
         function startPrivacyProcessing() {
@@ -1494,25 +1144,12 @@
         }
 
         function confirmUpload() {
-            var imagesToProcess = [];
-            
-            // Add all previously captured pages
-            if (capturedImages.length > 0) {
-                imagesToProcess = capturedImages.slice();
-            }
-            
-            // Add current image if it exists
-            if (currentImage) {
-                imagesToProcess.push(currentImage);
-            }
-
-            if (imagesToProcess.length === 0) {
-                showNotification('No images to upload', 'error');
+            if (!currentImage) {
+                showNotification('No image to upload', 'error');
                 return;
             }
 
-            var pageText = imagesToProcess.length === 1 ? 'receipt' : imagesToProcess.length + '-page receipt';
-            showNotification('Saving your privacy-protected ' + pageText + '...', 'info');
+            showNotification('Saving your privacy-protected receipt...', 'info');
 
             setTimeout(function() {
                 var receiptId = 'receipt_' + Date.now();
@@ -1522,21 +1159,16 @@
                     id: receiptId,
                     userId: currentUser.email,
                     timestamp: new Date().toISOString(),
-                    imageData: imagesToProcess[0], // Primary image for thumbnail
-                    images: imagesToProcess, // All pages
+                    imageData: currentImage,
                     url: receiptUrl,
-                    redactionCount: 3 * imagesToProcess.length, // Scale with pages
-                    pageCount: imagesToProcess.length
+                    redactionCount: 3
                 };
 
                 saveReceiptToStorage(receipt);
                 sendReceiptConfirmationEmail(receipt);
                 showUploadSuccess(receipt);
                 
-                var message = imagesToProcess.length === 1 ? 
-                    'Receipt uploaded and emailed!' :
-                    imagesToProcess.length + '-page receipt uploaded and emailed!';
-                showNotification(message, 'success');
+                showNotification('Receipt uploaded and emailed!', 'success');
             }, 2000);
         }
 
@@ -1580,7 +1212,7 @@
                     '</div>' +
                     '<div style="border-top: 1px solid #e5e7eb; padding-top: 20px; margin-top: 20px;">' +
                     '<p style="color: #6b7280; font-size: 14px; margin: 0;"><strong>Upload Date:</strong> ' + uploadDate + '</p>' +
-                    '<p style="color: #6b7280; font-size: 14px; margin: 5px 0 0 0;"><strong>Status:</strong> Privacy-Protected (' + (receipt.pageCount || 1) + ' page)</p>' +
+                    '<p style="color: #6b7280; font-size: 14px; margin: 5px 0 0 0;"><strong>Status:</strong> Privacy-Protected</p>' +
                     '</div>' +
                     '</div>' +
                     '</div>'
@@ -1634,9 +1266,7 @@
         function cancelUpload() {
             document.getElementById('privacy-processing').classList.add('hidden');
             document.getElementById('upload-success').classList.add('hidden');
-            hideCropPreview();
             currentImage = null;
-            originalImageData = null;
         }
 
         function loadGallery() {
@@ -1651,6 +1281,11 @@
             filteredReceipts = allReceipts.slice();
             displayFilteredReceipts();
             updateResultsCount();
+        }
+
+        function getUserReceipts(email) {
+            var allStoredReceipts = JSON.parse(localStorage.getItem('receipts') || '{}');
+            return allStoredReceipts[email] || [];
         }
 
         function generateMockReceiptData() {
@@ -1683,302 +1318,4 @@
             var ctx = canvas.getContext('2d');
             
             ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.strokeStyle = '#e5e7eb';
-            ctx.lineWidth = 1;
-            ctx.strokeRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = '#2d5a3d';
-            ctx.fillRect(0, 0, canvas.width, 60);
-            
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 16px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText(merchantName, canvas.width/2, 35);
-            
-            ctx.fillStyle = '#374151';
-            ctx.font = 'bold 24px Arial';
-            ctx.fillText('$' + amount.toFixed(2), canvas.width/2, 120);
-            
-            ctx.fillStyle = '#6b7280';
-            ctx.font = '14px Arial';
-            ctx.fillText(new Date().toLocaleDateString(), canvas.width/2, 150);
-            
-            ctx.fillStyle = '#10b981';
-            ctx.fillRect(20, canvas.height - 40, canvas.width - 40, 25);
-            ctx.fillStyle = '#ffffff';
-            ctx.font = '12px Arial';
-            ctx.fillText('Privacy Protected', canvas.width/2, canvas.height - 23);
-            
-            return canvas.toDataURL('image/png');
-        }
-
-        function getUserReceipts(email) {
-            var allStoredReceipts = JSON.parse(localStorage.getItem('receipts') || '{}');
-            return allStoredReceipts[email] || [];
-        }
-
-        function applyAllFilters() {
-            var searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
-            var dateFrom = document.getElementById('dateFrom').value;
-            var dateTo = document.getElementById('dateTo').value;
-            var minAmount = parseFloat(document.getElementById('minAmount').value) || 0;
-            var maxAmount = parseFloat(document.getElementById('maxAmount').value) || Infinity;
-            var sortBy = document.getElementById('sortSelect').value;
-
-            filteredReceipts = allReceipts.filter(function(receipt) {
-                var matchesSearch = true;
-                var matchesDate = true;
-                var matchesAmount = true;
-
-                if (searchQuery) {
-                    matchesSearch = (receipt.merchant && receipt.merchant.toLowerCase().indexOf(searchQuery) !== -1) ||
-                                   (receipt.category && receipt.category.toLowerCase().indexOf(searchQuery) !== -1) ||
-                                   (receipt.amount && receipt.amount.toString().indexOf(searchQuery) !== -1) ||
-                                   (receipt.date && receipt.date.indexOf(searchQuery) !== -1);
-                }
-
-                if (dateFrom || dateTo) {
-                    var receiptDate = new Date(receipt.date);
-                    if (dateFrom && receiptDate < new Date(dateFrom)) {
-                        matchesDate = false;
-                    }
-                    if (dateTo && receiptDate > new Date(dateTo)) {
-                        matchesDate = false;
-                    }
-                }
-
-                if (receipt.amount < minAmount || receipt.amount > maxAmount) {
-                    matchesAmount = false;
-                }
-
-                return matchesSearch && matchesDate && matchesAmount;
-            });
-
-            filteredReceipts.sort(function(a, b) {
-                switch(sortBy) {
-                    case 'oldest':
-                        return new Date(a.date) - new Date(b.date);
-                    case 'highest':
-                        return b.amount - a.amount;
-                    case 'lowest':
-                        return a.amount - b.amount;
-                    default:
-                        return new Date(b.date) - new Date(a.date);
-                }
-            });
-
-            displayFilteredReceipts();
-            updateResultsCount();
-        }
-
-        // SEARCH HIGHLIGHTING FUNCTIONS
-        function highlightSearchTerms(text, searchQuery) {
-            if (!searchQuery || !text) {
-                return text;
-            }
-
-            var searchTerms = searchQuery.toLowerCase().split(/\s+/).filter(function(term) {
-                return term.length > 0;
-            });
-
-            var highlightedText = text;
-            
-            for (var i = 0; i < searchTerms.length; i++) {
-                var term = searchTerms[i];
-                var regex = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-                highlightedText = highlightedText.replace(regex, '<span class="search-highlight">$1</span>');
-            }
-            
-            return highlightedText;
-        }
-
-        function highlightMerchantName(merchant, searchQuery) {
-            if (!searchQuery || !merchant) {
-                return merchant;
-            }
-
-            var searchTerms = searchQuery.toLowerCase().split(/\s+/).filter(function(term) {
-                return term.length > 0;
-            });
-
-            var highlightedMerchant = merchant;
-            
-            for (var i = 0; i < searchTerms.length; i++) {
-                var term = searchTerms[i];
-                if (merchant.toLowerCase().indexOf(term) !== -1) {
-                    var regex = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-                    highlightedMerchant = highlightedMerchant.replace(regex, '<span class="search-highlight-merchant">$1</span>');
-                }
-            }
-            
-            return highlightedMerchant;
-        }
-
-        function highlightAmount(amount, searchQuery) {
-            if (!searchQuery || !amount) {
-                return '$' + amount.toFixed(2);
-            }
-
-            var amountText = amount.toString();
-            if (amountText.indexOf(searchQuery.toLowerCase()) !== -1) {
-                return '<span class="search-highlight-amount">$' + amount.toFixed(2) + '</span>';
-            }
-            
-            return '$' + amount.toFixed(2);
-        }
-
-        function displayFilteredReceipts() {
-            var grid = document.getElementById('receiptGrid');
-            var searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
-            
-            grid.innerHTML = '';
-            
-            if (searchQuery) {
-                grid.parentElement.classList.add('search-active');
-            } else {
-                grid.parentElement.classList.remove('search-active');
-            }
-            
-            if (filteredReceipts.length === 0) {
-                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #6b7280;">' +
-                               '<h3>No receipts found</h3>' +
-                               '<p>Try adjusting your search or filters</p></div>';
-                return;
-            }
-            
-            for (var i = 0; i < filteredReceipts.length; i++) {
-                var receipt = filteredReceipts[i];
-                var card = createReceiptCard(receipt, searchQuery);
-                grid.appendChild(card);
-            }
-        }
-
-        function createReceiptCard(receipt, searchQuery) {
-            var card = document.createElement('div');
-            card.className = 'receipt-card';
-            
-            if (searchQuery) {
-                card.classList.add('search-match');
-            }
-            
-            var categoryClass = receipt.category ? receipt.category.toUpperCase() : 'GENERAL';
-            
-            var highlightedMerchant = highlightMerchantName(receipt.merchant || 'Unknown Merchant', searchQuery);
-            var highlightedAmount = highlightAmount(receipt.amount || 0, searchQuery);
-            
-            card.innerHTML = 
-                '<img src="' + receipt.imageData + '" alt="Receipt" class="receipt-thumbnail">' +
-                '<div class="receipt-info">' +
-                '<div class="receipt-merchant">' + highlightedMerchant + '</div>' +
-                '<div class="receipt-amount">' + highlightedAmount + '</div>' +
-                '<div style="color: #6b7280; font-size: 0.9rem; margin-bottom: 0.5rem;">' + 
-                new Date(receipt.date).toLocaleDateString() + '</div>' +
-                '<div class="receipt-category">' + categoryClass + '</div>' +
-                '<div class="privacy-indicator">Privacy Protected</div>' +
-                '<div style="margin-top: 0.5rem;">' +
-                '<button class="camera-button secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem; margin: 0.25rem;">View</button>' +
-                '</div>' +
-                '</div>';
-            
-            return card;
-        }
-
-        function updateResultsCount() {
-            var countDiv = document.getElementById('filterResultsCount');
-            var searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
-            
-            if (filteredReceipts.length < allReceipts.length) {
-                var message = 'Showing ' + filteredReceipts.length + ' of ' + allReceipts.length + ' receipts';
-                
-                if (searchQuery) {
-                    message += ' matching "' + searchQuery + '"';
-                }
-                
-                countDiv.textContent = message;
-                countDiv.style.display = 'block';
-            } else if (searchQuery && filteredReceipts.length === allReceipts.length) {
-                countDiv.textContent = 'All ' + allReceipts.length + ' receipts match "' + searchQuery + '"';
-                countDiv.style.display = 'block';
-            } else {
-                countDiv.style.display = 'none';
-            }
-        }
-
-        function clearAllFilters() {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('dateFrom').value = '';
-            document.getElementById('dateTo').value = '';
-            document.getElementById('minAmount').value = '';
-            document.getElementById('maxAmount').value = '';
-            document.getElementById('sortSelect').value = 'newest';
-            
-            applyAllFilters();
-            showNotification('All filters cleared', 'success');
-        }
-
-        function showNotification(message, type) {
-            var notification = document.getElementById('notification');
-            var text = document.getElementById('notificationText');
-            
-            notification.className = 'notification show';
-            if (type) notification.classList.add(type);
-            
-            text.textContent = message;
-            
-            setTimeout(function() {
-                notification.classList.remove('show');
-                setTimeout(function() {
-                    notification.className = 'notification';
-                }, 300);
-            }, 4000);
-        }
-
-        function saveUserState() {
-            if (currentUser) {
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            }
-        }
-
-        function loadUserState() {
-            try {
-                var savedUser = localStorage.getItem('currentUser');
-                if (savedUser) {
-                    currentUser = JSON.parse(savedUser);
-                    updateUserStatus();
-                }
-            } catch (e) {
-                console.log('No saved user state');
-            }
-        }
-
-        function updateUserStatus() {
-            var userStatus = document.getElementById('userStatus');
-            if (currentUser) {
-                userStatus.textContent = currentUser.email + ' (FREE)';
-                userStatus.style.cursor = 'pointer';
-                userStatus.onclick = function() {
-                    if (confirm('Sign out?')) {
-                        signOut();
-                    }
-                };
-            } else {
-                userStatus.textContent = 'Not signed in';
-                userStatus.style.cursor = 'default';
-                userStatus.onclick = null;
-            }
-        }
-
-        function signOut() {
-            currentUser = null;
-            localStorage.removeItem('currentUser');
-            updateUserStatus();
-            switchTab('upload');
-            showNotification('Signed out', 'info');
-        }
-
-        document.addEventListener('DOMContentLoaded', initializeApp);
-    </script>
-</body>
-</html>
+            ctx.fillRect(0, 0, canvas.width, canvas
