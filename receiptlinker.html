@@ -205,6 +205,7 @@
             border: 2px solid #2d5a3d;
         }
 
+        /* AUTO-DETECTION CAMERA SYSTEM */
         .camera-container {
             position: relative;
             width: 100%;
@@ -218,20 +219,122 @@
             background: #000;
         }
 
-        .capture-button {
+        .auto-detection-overlay {
             position: absolute;
-            bottom: 1rem;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .detection-canvas {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .detection-status {
+            position: absolute;
+            top: 10px;
             left: 50%;
             transform: translateX(-50%);
-            background: #2d5a3d;
+            background: rgba(0, 0, 0, 0.8);
             color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 1.5rem;
-            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            z-index: 10;
         }
+
+        .detection-status.detecting {
+            background: rgba(245, 158, 11, 0.9);
+        }
+
+        .detection-status.ready {
+            background: rgba(16, 185, 129, 0.9);
+        }
+
+        .capture-preview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 20;
+        }
+
+        .captured-image {
+            max-width: 90%;
+            max-height: 60%;
+            border: 2px solid #10b981;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .capture-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .capture-controls button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .retake-btn {
+            background: #dc2626;
+            color: white;
+        }
+
+        .retake-btn:hover {
+            background: #b91c1c;
+        }
+
+        .add-page-btn {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .add-page-btn:hover {
+            background: #d97706;
+        }
+
+        .save-btn {
+            background: #10b981;
+            color: white;
+        }
+
+        .save-btn:hover {
+            background: #059669;
+        }
+
+        .multi-page-indicator {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(45, 90, 61, 0.9);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            z-index: 15;
+        }
+        /* END AUTO-DETECTION CAMERA SYSTEM */
 
         .privacy-controls {
             background: white;
@@ -374,7 +477,7 @@
             margin-top: 0.25rem;
         }
 
-        /* STEP 4 ADDITION: Search Highlighting CSS */
+        /* SEARCH HIGHLIGHTING CSS */
         .search-highlight {
             background: #fef3c7;
             color: #92400e;
@@ -419,204 +522,6 @@
             border: 2px solid #10b981;
             transform: scale(1.02);
         }
-        /* END STEP 4 ADDITION */
-
-        /* BANK-QUALITY CAMERA SYSTEM CSS */
-        .camera-container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto 2rem;
-        }
-
-        .receipt-guide-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 3px solid #10b981;
-            border-radius: 8px;
-            width: 280px;
-            height: 350px;
-            z-index: 10;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-
-        .receipt-guide-overlay.cvs-mode {
-            height: 500px;
-            border-color: #f59e0b;
-        }
-
-        .receipt-guide-overlay.perfect-shot {
-            border-color: #10b981;
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
-            animation: perfectShotPulse 1s ease-in-out infinite;
-        }
-
-        @keyframes perfectShotPulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.02); }
-        }
-
-        .guide-corners {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #10b981;
-        }
-
-        .guide-corners.top-left {
-            top: -3px;
-            left: -3px;
-            border-right: none;
-            border-bottom: none;
-        }
-
-        .guide-corners.top-right {
-            top: -3px;
-            right: -3px;
-            border-left: none;
-            border-bottom: none;
-        }
-
-        .guide-corners.bottom-left {
-            bottom: -3px;
-            left: -3px;
-            border-right: none;
-            border-top: none;
-        }
-
-        .guide-corners.bottom-right {
-            bottom: -3px;
-            right: -3px;
-            border-left: none;
-            border-top: none;
-        }
-
-        .camera-quality-feedback {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            z-index: 15;
-            transition: all 0.3s ease;
-        }
-
-        .camera-quality-feedback.perfect {
-            background: rgba(16, 185, 129, 0.9);
-            animation: perfectFeedbackPulse 0.8s ease-in-out;
-        }
-
-        .camera-quality-feedback.good {
-            background: rgba(245, 158, 11, 0.9);
-        }
-
-        .camera-quality-feedback.poor {
-            background: rgba(239, 68, 68, 0.9);
-        }
-
-        @keyframes perfectFeedbackPulse {
-            0% { transform: translateX(-50%) scale(0.9); opacity: 0.8; }
-            50% { transform: translateX(-50%) scale(1.1); opacity: 1; }
-            100% { transform: translateX(-50%) scale(1); opacity: 1; }
-        }
-
-        .receipt-type-indicator {
-            position: absolute;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(45, 90, 61, 0.9);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            z-index: 15;
-        }
-
-        .camera-controls {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-            z-index: 15;
-        }
-
-        .receipt-mode-toggle {
-            background: rgba(45, 90, 61, 0.9);
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 15px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .receipt-mode-toggle:hover {
-            background: rgba(45, 90, 61, 1);
-        }
-
-        .capture-button {
-            background: #2d5a3d;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .capture-button:hover {
-            transform: scale(1.05);
-        }
-
-        .capture-button:disabled {
-            background: #6b7280;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .auto-enhancement-preview {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 20;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .enhancement-preview-image {
-            max-width: 90%;
-            max-height: 70%;
-            border: 2px solid #10b981;
-            border-radius: 8px;
-        }
-
-        .enhancement-controls {
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-        }
-        /* END BANK-QUALITY CAMERA SYSTEM CSS */
 
         .notification {
             position: fixed;
@@ -740,7 +645,21 @@
 
                 <div id="camera-interface" class="camera-container hidden">
                     <video id="videoPreview" class="video-preview" autoplay muted playsinline></video>
-                    <button class="capture-button" onclick="capturePhoto()">📷</button>
+                    <canvas id="detectionCanvas" class="detection-canvas"></canvas>
+                    <div class="auto-detection-overlay">
+                        <div id="detectionStatus" class="detection-status">Positioning receipt...</div>
+                    </div>
+                    <div id="multiPageIndicator" class="multi-page-indicator hidden">Page 1</div>
+                    
+                    <div id="capturePreview" class="capture-preview">
+                        <img id="capturedImage" class="captured-image" />
+                        <div class="capture-controls">
+                            <button class="retake-btn" onclick="retakePhoto()">Retake</button>
+                            <button class="add-page-btn" onclick="addPage()">Add Page</button>
+                            <button class="save-btn" onclick="saveCapture()">Save</button>
+                        </div>
+                    </div>
+                    
                     <div style="text-align: center; margin-top: 1rem;">
                         <button class="camera-button secondary" onclick="stopCamera()">Stop Camera</button>
                     </div>
@@ -972,14 +891,18 @@
         var currentTier = 'free';
         var videoStream = null;
         var currentImage = null;
+        var capturedImages = [];
         var allReceipts = [];
         var filteredReceipts = [];
 
-        // BANK-QUALITY CAMERA SYSTEM VARIABLES
-        var cameraQualityInterval = null;
-        var receiptMode = 'standard'; // 'standard' or 'long'
-        var qualityScore = 0;
-        var edgeDetected = false;
+        // AUTO-DETECTION CAMERA VARIABLES
+        var detectionCanvas = null;
+        var detectionContext = null;
+        var detectionInterval = null;
+        var isDetecting = false;
+        var detectedEdges = null;
+        var stableDetectionCount = 0;
+        var autoCaptureLock = false;
 
         function initializeApp() {
             loadUserState();
@@ -1109,102 +1032,306 @@
             var reader = new FileReader();
             reader.onload = function(e) {
                 currentImage = e.target.result;
+                capturedImages = [currentImage];
                 startPrivacyProcessing();
             };
             reader.readAsDataURL(file);
         }
 
-        // SURGICAL ADDITION: Enhanced mobile camera permission functions
-        async function requestCameraPermission() {
-            try {
-                if ('permissions' in navigator) {
-                    const permission = await navigator.permissions.query({ name: 'camera' });
-                    console.log('Camera permission status:', permission.state);
-                    
-                    if (permission.state === 'denied') {
-                        showMobileCameraHelp();
-                        return false;
-                    }
-                }
-                return true;
-            } catch (error) {
-                console.log('Permissions API not available, proceeding with getUserMedia');
-                return true;
-            }
-        }
-        
-        function showMobileCameraHelp() {
-            var helpMessage = 'Camera access is required for receipt capture. Please:\n\n' +
-                '1. Check your browser settings\n' +
-                '2. Allow camera access when prompted\n' +
-                '3. Try refreshing the page\n' +
-                '4. Ensure you\'re using HTTPS\n\n' +
-                'Alternative: Use the file upload option instead.';
-            
-            showNotification(helpMessage, 'error');
-            
-            setTimeout(function() {
-                showNotification('Switched to file upload mode', 'info');
-            }, 3000);
-        }
-
-        async function startBankQualityCamera() {
-            try {
-                const hasPermission = await requestCameraPermission();
-                if (!hasPermission) {
-                    return;
-                }
-                
-                const constraints = {
-                    video: {
-                        facingMode: 'environment',
-                        width: { ideal: 1920, max: 3840 },
-                        height: { ideal: 1080, max: 2160 }
-                    }
-                };
-                
-                const stream = await navigator.mediaDevices.getUserMedia(constraints);
-                const video = document.getElementById('videoPreview');
-                video.srcObject = stream;
-                videoStream = stream;
-                
-                video.setAttribute('playsinline', true);
-                video.setAttribute('webkit-playsinline', true);
-                
-                await video.play();
-                
-                initializeCameraGuides();
-                startQualityAssessment();
-                
-                document.getElementById('camera-interface').classList.remove('hidden');
-                showNotification('Camera ready! Position receipt within guides', 'success');
-                
-            } catch (error) {
-                console.error('Camera error:', error);
-                
-                if (error.name === 'NotAllowedError') {
-                    showMobileCameraHelp();
-                } else if (error.name === 'NotFoundError') {
-                    showNotification('No camera found on this device. Please use file upload.', 'error');
-                } else if (error.name === 'NotSupportedError') {
-                    showNotification('Camera not supported in this browser. Please use file upload.', 'error');
-                } else {
-                    showNotification('Camera error: ' + error.message + '. Please try file upload.', 'error');
-                }
-            }
-        }
-        // END SURGICAL ADDITION
-
+        // AUTO-DETECTION CAMERA SYSTEM FUNCTIONS
         function startCamera() {
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
                 showNotification('Camera not supported on this device', 'error');
                 return;
             }
 
-            showNotification('Requesting camera access...', 'info');
+            showNotification('Starting auto-detection camera...', 'info');
 
-            // SURGICAL MODIFICATION: Use enhanced mobile camera system
-            startBankQualityCamera();
+            navigator.mediaDevices.getUserMedia({
+                video: {
+                    facingMode: 'environment',
+                    width: { ideal: 1920 },
+                    height: { ideal: 1080 }
+                }
+            })
+            .then(function(stream) {
+                var video = document.getElementById('videoPreview');
+                video.srcObject = stream;
+                videoStream = stream;
+                
+                video.onloadedmetadata = function() {
+                    initializeAutoDetection();
+                    document.getElementById('camera-interface').classList.remove('hidden');
+                    showNotification('Position receipt in view - auto-capture enabled', 'success');
+                };
+            })
+            .catch(function(error) {
+                console.error('Camera error:', error);
+                showNotification('Camera access denied. Please allow camera access.', 'error');
+            });
+        }
+
+        function initializeAutoDetection() {
+            var video = document.getElementById('videoPreview');
+            detectionCanvas = document.getElementById('detectionCanvas');
+            detectionContext = detectionCanvas.getContext('2d');
+            
+            // Set canvas size to match video
+            video.addEventListener('loadeddata', function() {
+                detectionCanvas.width = video.videoWidth;
+                detectionCanvas.height = video.videoHeight;
+                
+                // Start edge detection
+                startEdgeDetection();
+            });
+        }
+
+        function startEdgeDetection() {
+            isDetecting = true;
+            detectionInterval = setInterval(function() {
+                performEdgeDetection();
+            }, 200); // Check every 200ms
+        }
+
+        function stopEdgeDetection() {
+            isDetecting = false;
+            if (detectionInterval) {
+                clearInterval(detectionInterval);
+                detectionInterval = null;
+            }
+        }
+
+        function performEdgeDetection() {
+            if (!isDetecting || autoCaptureLock) return;
+            
+            var video = document.getElementById('videoPreview');
+            var statusEl = document.getElementById('detectionStatus');
+            
+            if (video.readyState !== video.HAVE_ENOUGH_DATA) return;
+            
+            // Draw video frame to canvas
+            detectionContext.drawImage(video, 0, 0, detectionCanvas.width, detectionCanvas.height);
+            
+            // Get image data for processing
+            var imageData = detectionContext.getImageData(0, 0, detectionCanvas.width, detectionCanvas.height);
+            
+            // Simple edge detection algorithm
+            var edges = detectDocumentEdges(imageData);
+            
+            if (edges && edges.confidence > 0.7) {
+                // Good detection found
+                stableDetectionCount++;
+                statusEl.textContent = 'Document detected - ' + Math.min(stableDetectionCount, 10) + '/10';
+                statusEl.className = 'detection-status detecting';
+                
+                // Draw detection outline
+                drawDetectionOutline(edges.corners);
+                
+                if (stableDetectionCount >= 10) {
+                    // Auto-capture after stable detection
+                    statusEl.textContent = 'Perfect! Auto-capturing...';
+                    statusEl.className = 'detection-status ready';
+                    autoCapture(edges);
+                }
+            } else {
+                // Reset counter if detection lost
+                stableDetectionCount = Math.max(0, stableDetectionCount - 1);
+                statusEl.textContent = 'Position receipt in view...';
+                statusEl.className = 'detection-status';
+                
+                // Clear detection outline
+                clearDetectionOutline();
+            }
+        }
+
+        function detectDocumentEdges(imageData) {
+            // Simplified edge detection algorithm
+            var width = imageData.width;
+            var height = imageData.height;
+            var data = imageData.data;
+            
+            // Convert to grayscale and detect edges
+            var edges = [];
+            var threshold = 100;
+            
+            // Simple rectangular detection
+            var minX = width, maxX = 0, minY = height, maxY = 0;
+            var edgePixels = 0;
+            
+            for (var y = 1; y < height - 1; y++) {
+                for (var x = 1; x < width - 1; x++) {
+                    var idx = (y * width + x) * 4;
+                    
+                    // Simple edge detection using gradient
+                    var gx = Math.abs(data[idx] - data[idx + 4]);
+                    var gy = Math.abs(data[idx] - data[idx + width * 4]);
+                    var magnitude = gx + gy;
+                    
+                    if (magnitude > threshold) {
+                        edgePixels++;
+                        minX = Math.min(minX, x);
+                        maxX = Math.max(maxX, x);
+                        minY = Math.min(minY, y);
+                        maxY = Math.max(maxY, y);
+                    }
+                }
+            }
+            
+            // Check if we found a reasonable document shape
+            var rectWidth = maxX - minX;
+            var rectHeight = maxY - minY;
+            var aspectRatio = rectWidth / rectHeight;
+            
+            if (edgePixels > 1000 && rectWidth > width * 0.3 && rectHeight > height * 0.3) {
+                return {
+                    corners: [
+                        {x: minX, y: minY},
+                        {x: maxX, y: minY},
+                        {x: maxX, y: maxY},
+                        {x: minX, y: maxY}
+                    ],
+                    confidence: Math.min(edgePixels / 5000, 1.0)
+                };
+            }
+            
+            return null;
+        }
+
+        function drawDetectionOutline(corners) {
+            if (!corners) return;
+            
+            detectionContext.strokeStyle = '#10b981';
+            detectionContext.lineWidth = 3;
+            detectionContext.setLineDash([]);
+            
+            detectionContext.beginPath();
+            detectionContext.moveTo(corners[0].x, corners[0].y);
+            for (var i = 1; i < corners.length; i++) {
+                detectionContext.lineTo(corners[i].x, corners[i].y);
+            }
+            detectionContext.closePath();
+            detectionContext.stroke();
+        }
+
+        function clearDetectionOutline() {
+            var video = document.getElementById('videoPreview');
+            detectionContext.clearRect(0, 0, detectionCanvas.width, detectionCanvas.height);
+        }
+
+        function autoCapture(edgeData) {
+            if (autoCaptureLock) return;
+            autoCaptureLock = true;
+            
+            var video = document.getElementById('videoPreview');
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            // Capture the frame
+            context.drawImage(video, 0, 0);
+            
+            // Crop to detected edges if available
+            var croppedImage = cropToEdges(canvas, edgeData.corners);
+            
+            // Show capture preview
+            showCapturePreview(croppedImage);
+            
+            showNotification('Receipt captured! Review and save or retake.', 'success');
+        }
+
+        function cropToEdges(canvas, corners) {
+            if (!corners) return canvas.toDataURL('image/jpeg', 0.95);
+            
+            // Find bounding box
+            var minX = Math.min(corners[0].x, corners[1].x, corners[2].x, corners[3].x);
+            var maxX = Math.max(corners[0].x, corners[1].x, corners[2].x, corners[3].x);
+            var minY = Math.min(corners[0].y, corners[1].y, corners[2].y, corners[3].y);
+            var maxY = Math.max(corners[0].y, corners[1].y, corners[2].y, corners[3].y);
+            
+            // Add some padding
+            var padding = 10;
+            minX = Math.max(0, minX - padding);
+            minY = Math.max(0, minY - padding);
+            maxX = Math.min(canvas.width, maxX + padding);
+            maxY = Math.min(canvas.height, maxY + padding);
+            
+            var cropCanvas = document.createElement('canvas');
+            var cropContext = cropCanvas.getContext('2d');
+            
+            cropCanvas.width = maxX - minX;
+            cropCanvas.height = maxY - minY;
+            
+            cropContext.drawImage(canvas, minX, minY, cropCanvas.width, cropCanvas.height, 0, 0, cropCanvas.width, cropCanvas.height);
+            
+            return cropCanvas.toDataURL('image/jpeg', 0.95);
+        }
+
+        function showCapturePreview(imageData) {
+            var preview = document.getElementById('capturePreview');
+            var img = document.getElementById('capturedImage');
+            
+            img.src = imageData;
+            currentImage = imageData;
+            
+            // Stop detection while in preview
+            stopEdgeDetection();
+            
+            preview.style.display = 'flex';
+            updateMultiPageIndicator();
+        }
+
+        function hideCapturePreview() {
+            var preview = document.getElementById('capturePreview');
+            preview.style.display = 'none';
+            
+            // Restart detection
+            autoCaptureLock = false;
+            stableDetectionCount = 0;
+            if (isDetecting) {
+                startEdgeDetection();
+            }
+        }
+
+        function retakePhoto() {
+            hideCapturePreview();
+            showNotification('Ready to capture again', 'info');
+        }
+
+        function addPage() {
+            // Add current image to the collection
+            if (currentImage) {
+                capturedImages.push(currentImage);
+                updateMultiPageIndicator();
+                showNotification('Page ' + capturedImages.length + ' added. Position next page.', 'success');
+            }
+            hideCapturePreview();
+        }
+
+        function saveCapture() {
+            if (currentImage) {
+                if (capturedImages.length === 0) {
+                    capturedImages = [currentImage];
+                } else {
+                    capturedImages.push(currentImage);
+                }
+                
+                stopCamera();
+                startPrivacyProcessing();
+                
+                showNotification('Processing ' + capturedImages.length + ' page(s)...', 'info');
+            }
+        }
+
+        function updateMultiPageIndicator() {
+            var indicator = document.getElementById('multiPageIndicator');
+            if (capturedImages.length > 0) {
+                indicator.textContent = 'Pages: ' + capturedImages.length + ' + current';
+                indicator.classList.remove('hidden');
+            } else {
+                indicator.classList.add('hidden');
+            }
         }
 
         function stopCamera() {
@@ -1216,204 +1343,18 @@
                 videoStream = null;
             }
             
-            // BANK-QUALITY ENHANCEMENT: Clean up camera guides and quality assessment
-            stopQualityAssessment();
-            removeCameraGuides();
-            // END BANK-QUALITY ENHANCEMENT
-            
+            stopEdgeDetection();
             document.getElementById('camera-interface').classList.add('hidden');
+            document.getElementById('capturePreview').style.display = 'none';
+            
+            // Reset capture state
+            autoCaptureLock = false;
+            stableDetectionCount = 0;
+            capturedImages = [];
+            
             showNotification('Camera stopped', 'info');
         }
-
-        // BANK-QUALITY CAMERA SYSTEM FUNCTIONS
-        function initializeCameraGuides() {
-            var container = document.getElementById('camera-interface');
-            
-            // Create receipt guide overlay
-            var guideOverlay = document.createElement('div');
-            guideOverlay.className = 'receipt-guide-overlay';
-            guideOverlay.id = 'receiptGuideOverlay';
-            
-            // Add corner guides
-            var corners = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
-            for (var i = 0; i < corners.length; i++) {
-                var corner = document.createElement('div');
-                corner.className = 'guide-corners ' + corners[i];
-                guideOverlay.appendChild(corner);
-            }
-            
-            container.appendChild(guideOverlay);
-            
-            // Create quality feedback indicator
-            var qualityFeedback = document.createElement('div');
-            qualityFeedback.className = 'camera-quality-feedback';
-            qualityFeedback.id = 'qualityFeedback';
-            qualityFeedback.textContent = 'Position receipt within guides';
-            container.appendChild(qualityFeedback);
-            
-            // Create receipt type indicator
-            var typeIndicator = document.createElement('div');
-            typeIndicator.className = 'receipt-type-indicator';
-            typeIndicator.id = 'receiptTypeIndicator';
-            typeIndicator.textContent = 'Standard Receipt Mode';
-            container.appendChild(typeIndicator);
-            
-            // Create enhanced controls
-            var controls = document.createElement('div');
-            controls.className = 'camera-controls';
-            controls.innerHTML = 
-                '<button class="receipt-mode-toggle" onclick="toggleReceiptMode()">Long Receipt</button>' +
-                '<button class="capture-button" onclick="capturePhoto()" id="enhancedCaptureBtn">📷</button>';
-            
-            container.appendChild(controls);
-        }
-
-        function removeCameraGuides() {
-            var elements = ['receiptGuideOverlay', 'qualityFeedback', 'receiptTypeIndicator'];
-            for (var i = 0; i < elements.length; i++) {
-                var element = document.getElementById(elements[i]);
-                if (element) {
-                    element.remove();
-                }
-            }
-            
-            var controls = document.querySelector('#camera-interface .camera-controls');
-            if (controls) {
-                controls.remove();
-            }
-        }
-
-        function startQualityAssessment() {
-            cameraQualityInterval = setInterval(function() {
-                assessReceiptQuality();
-            }, 500);
-        }
-
-        function stopQualityAssessment() {
-            if (cameraQualityInterval) {
-                clearInterval(cameraQualityInterval);
-                cameraQualityInterval = null;
-            }
-        }
-
-        function assessReceiptQuality() {
-            var video = document.getElementById('videoPreview');
-            var feedback = document.getElementById('qualityFeedback');
-            var overlay = document.getElementById('receiptGuideOverlay');
-            var captureBtn = document.getElementById('enhancedCaptureBtn');
-            
-            if (!video || !feedback || !overlay) return;
-            
-            // Simulate quality assessment (in production, this would use actual computer vision)
-            var mockQualityScore = Math.random() * 100;
-            qualityScore = mockQualityScore;
-            
-            // Simulate edge detection
-            edgeDetected = mockQualityScore > 60;
-            
-            if (mockQualityScore > 85) {
-                feedback.textContent = 'Perfect shot! 📸';
-                feedback.className = 'camera-quality-feedback perfect';
-                overlay.classList.add('perfect-shot');
-                if (captureBtn) captureBtn.disabled = false;
-            } else if (mockQualityScore > 70) {
-                feedback.textContent = 'Good positioning';
-                feedback.className = 'camera-quality-feedback good';
-                overlay.classList.remove('perfect-shot');
-                if (captureBtn) captureBtn.disabled = false;
-            } else if (mockQualityScore > 50) {
-                feedback.textContent = 'Adjust positioning';
-                feedback.className = 'camera-quality-feedback';
-                overlay.classList.remove('perfect-shot');
-                if (captureBtn) captureBtn.disabled = false;
-            } else {
-                feedback.textContent = 'Move closer to receipt';
-                feedback.className = 'camera-quality-feedback poor';
-                overlay.classList.remove('perfect-shot');
-                if (captureBtn) captureBtn.disabled = true;
-            }
-        }
-
-        function toggleReceiptMode() {
-            var overlay = document.getElementById('receiptGuideOverlay');
-            var indicator = document.getElementById('receiptTypeIndicator');
-            var toggle = document.querySelector('.receipt-mode-toggle');
-            
-            if (receiptMode === 'standard') {
-                receiptMode = 'long';
-                overlay.classList.add('cvs-mode');
-                indicator.textContent = 'Long Receipt Mode (CVS/Pharmacy)';
-                toggle.textContent = 'Standard';
-                showNotification('Switched to long receipt mode', 'info');
-            } else {
-                receiptMode = 'standard';
-                overlay.classList.remove('cvs-mode');
-                indicator.textContent = 'Standard Receipt Mode';
-                toggle.textContent = 'Long Receipt';
-                showNotification('Switched to standard receipt mode', 'info');
-            }
-        }
-
-        function performAutoEnhancement(imageData) {
-            // Simulate auto-enhancement processing
-            return new Promise(function(resolve) {
-                setTimeout(function() {
-                    // In production, this would apply actual image enhancement
-                    var enhancedData = imageData; // Placeholder for enhancement
-                    resolve(enhancedData);
-                }, 1000);
-            });
-        }
-
-        function detectReceiptType(imageData) {
-            // Simulate receipt type detection
-            var types = ['standard', 'cvs', 'pharmacy', 'grocery', 'gas'];
-            var detectedType = types[Math.floor(Math.random() * types.length)];
-            
-            return {
-                type: detectedType,
-                confidence: Math.random() * 0.4 + 0.6, // 60-100% confidence
-                multiPage: receiptMode === 'long' || Math.random() > 0.8
-            };
-        }
-        // END BANK-QUALITY CAMERA SYSTEM FUNCTIONS
-
-        function capturePhoto() {
-            var video = document.getElementById('videoPreview');
-            var canvas = document.createElement('canvas');
-            
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            
-            var ctx = canvas.getContext('2d');
-            ctx.drawImage(video, 0, 0);
-            
-            var rawImage = canvas.toDataURL('image/jpeg', 0.95); // Higher quality for bank-grade
-            
-            // BANK-QUALITY ENHANCEMENT: Auto-enhancement processing
-            showNotification('Applying bank-quality enhancement...', 'info');
-            
-            var receiptType = detectReceiptType(rawImage);
-            
-            performAutoEnhancement(rawImage).then(function(enhancedImage) {
-                currentImage = enhancedImage;
-                
-                showNotification('Perfect! Image enhanced and optimized', 'success');
-                
-                if (receiptType.multiPage) {
-                    showNotification('Multi-page receipt detected. Continue capturing or proceed?', 'info');
-                }
-                
-                stopCamera();
-                startPrivacyProcessing();
-            }).catch(function(error) {
-                // Fallback to original functionality
-                currentImage = rawImage;
-                stopCamera();
-                startPrivacyProcessing();
-            });
-            // END BANK-QUALITY ENHANCEMENT
-        }
+        // END AUTO-DETECTION CAMERA SYSTEM
 
         function startPrivacyProcessing() {
             showNotification('Analyzing receipt for private information...', 'info');
@@ -1460,7 +1401,8 @@
                     timestamp: new Date().toISOString(),
                     imageData: currentImage,
                     url: receiptUrl,
-                    redactionCount: 3
+                    redactionCount: 3,
+                    pageCount: capturedImages.length
                 };
 
                 saveReceiptToStorage(receipt);
@@ -1526,7 +1468,7 @@
                 
                 '<div style="border-top: 1px solid #e5e7eb; padding-top: 20px; margin-top: 20px;">' +
                 '<p style="color: #6b7280; font-size: 14px; margin: 0;"><strong>Upload Date:</strong> ' + uploadDate + '</p>' +
-                '<p style="color: #6b7280; font-size: 14px; margin: 5px 0 0 0;"><strong>Status:</strong> Privacy-Protected</p>' +
+                '<p style="color: #6b7280; font-size: 14px; margin: 5px 0 0 0;"><strong>Status:</strong> Privacy-Protected (' + (receipt.pageCount || 1) + ' pages)</p>' +
                 '</div>' +
                 
                 '<div style="text-align: center; margin-top: 30px;">' +
@@ -1540,9 +1482,10 @@
             document.getElementById('upload-success').innerHTML = 
                 '<div style="background: white; padding: 2rem; border-radius: 1rem; text-align: center; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">' +
                 '<h3 style="color: #2d5a3d; margin-bottom: 1rem;">Receipt Saved & Email Sent!</h3>' +
-                '<p style="margin-bottom: 1rem;">Your receipt has been privacy-protected and saved successfully.</p>' +
+                '<p style="margin-bottom: 1rem;">Your ' + (receipt.pageCount || 1) + '-page receipt has been privacy-protected and saved successfully.</p>' +
                 '<div style="background: #f0f9f4; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">' +
                 '<strong style="color: #2d5a3d;">Privacy Protection Applied:</strong> ' + receipt.redactionCount + ' items automatically redacted<br>' +
+                '<strong style="color: #2d5a3d;">Pages Processed:</strong> ' + (receipt.pageCount || 1) + '<br>' +
                 '<strong style="color: #2d5a3d;">Email Sent To:</strong> ' + currentUser.email + '<br>' +
                 '<small style="color: #6b7280;">Check your inbox for the permanent URL!</small>' +
                 '</div>' +
@@ -1578,6 +1521,7 @@
             document.getElementById('privacy-processing').classList.add('hidden');
             document.getElementById('upload-success').classList.add('hidden');
             currentImage = null;
+            capturedImages = [];
         }
 
         function loadGallery() {
@@ -1714,7 +1658,7 @@
             updateResultsCount();
         }
 
-        // STEP 4 ADDITION: Search Highlighting Functions
+        // SEARCH HIGHLIGHTING FUNCTIONS
         function highlightSearchTerms(text, searchQuery) {
             if (!searchQuery || !text) {
                 return text;
@@ -1769,7 +1713,6 @@
             
             return '$' + amount.toFixed(2);
         }
-        // END STEP 4 ADDITION
 
         function displayFilteredReceipts() {
             var grid = document.getElementById('receiptGrid');
@@ -1777,13 +1720,11 @@
             
             grid.innerHTML = '';
             
-            // STEP 4 ADDITION: Add search state classes
             if (searchQuery) {
                 grid.parentElement.classList.add('search-active');
             } else {
                 grid.parentElement.classList.remove('search-active');
             }
-            // END STEP 4 ADDITION
             
             if (filteredReceipts.length === 0) {
                 grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #6b7280;">' +
@@ -1794,7 +1735,7 @@
             
             for (var i = 0; i < filteredReceipts.length; i++) {
                 var receipt = filteredReceipts[i];
-                var card = createReceiptCard(receipt, searchQuery); // STEP 4 ADDITION: Pass searchQuery
+                var card = createReceiptCard(receipt, searchQuery);
                 grid.appendChild(card);
             }
         }
@@ -1803,18 +1744,14 @@
             var card = document.createElement('div');
             card.className = 'receipt-card';
             
-            // STEP 4 ADDITION: Add search match class for visual feedback
             if (searchQuery) {
                 card.classList.add('search-match');
             }
-            // END STEP 4 ADDITION
             
             var categoryClass = receipt.category ? receipt.category.toUpperCase() : 'GENERAL';
             
-            // STEP 4 ADDITION: Apply highlighting to merchant and amount
             var highlightedMerchant = highlightMerchantName(receipt.merchant || 'Unknown Merchant', searchQuery);
             var highlightedAmount = highlightAmount(receipt.amount || 0, searchQuery);
-            // END STEP 4 ADDITION
             
             card.innerHTML = 
                 '<img src="' + receipt.imageData + '" alt="Receipt" class="receipt-thumbnail">' +
@@ -1840,19 +1777,15 @@
             if (filteredReceipts.length < allReceipts.length) {
                 var message = 'Showing ' + filteredReceipts.length + ' of ' + allReceipts.length + ' receipts';
                 
-                // STEP 4 ADDITION: Enhanced results count with search feedback
                 if (searchQuery) {
                     message += ' matching "' + searchQuery + '"';
                 }
-                // END STEP 4 ADDITION
                 
                 countDiv.textContent = message;
                 countDiv.style.display = 'block';
             } else if (searchQuery && filteredReceipts.length === allReceipts.length) {
-                // STEP 4 ADDITION: Show when all results match search
                 countDiv.textContent = 'All ' + allReceipts.length + ' receipts match "' + searchQuery + '"';
                 countDiv.style.display = 'block';
-                // END STEP 4 ADDITION
             } else {
                 countDiv.style.display = 'none';
             }
