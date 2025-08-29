@@ -5,565 +5,272 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReceiptLinker - Never Lose a Receipt Again</title>
     
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#2d5a3d">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #374151;
+            line-height: 1.6; color: #374151;
             background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-            min-height: 100vh;
-            padding-top: 80px;
+            min-height: 100vh; padding-top: 80px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 1rem; }
 
         .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: white;
-            color: #2d5a3d;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid #e5e7eb;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: white; color: #2d5a3d;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); border-bottom: 1px solid #e5e7eb;
         }
 
         .header-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1200px; margin: 0 auto; padding: 1rem 2rem;
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #2d5a3d;
-        }
+        .logo { font-size: 1.8rem; font-weight: 700; color: #2d5a3d; }
 
-        .header-buttons {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
+        .header-buttons { display: flex; gap: 1rem; align-items: center; }
 
-        .header-phone {
-            color: #6b7280;
-            font-size: 0.9rem;
-            text-decoration: none;
-        }
+        .header-phone { color: #6b7280; font-size: 0.9rem; text-decoration: none; }
 
-        .main-hero {
-            text-align: center;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-        }
+        .main-hero { text-align: center; padding: 2rem 0; margin-bottom: 2rem; }
 
         .tagline {
-            font-size: 1.6rem;
-            font-weight: 600;
-            margin: 0 0 1rem 0;
-            color: #2d5a3d;
-            line-height: 1.4;
+            font-size: 1.6rem; font-weight: 600; margin: 0 0 1rem 0;
+            color: #2d5a3d; line-height: 1.4;
         }
 
         .subtitle {
-            font-size: 1.1rem;
-            color: #6b7280;
-            margin-bottom: 2rem;
-            line-height: 1.5;
+            font-size: 1.1rem; color: #6b7280; margin-bottom: 2rem; line-height: 1.5;
         }
 
         .privacy-badge {
-            background: #2d5a3d;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            font-weight: 500;
-            margin: 2rem 0;
-            display: inline-block;
+            background: #2d5a3d; color: white; padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem; font-size: 1rem; font-weight: 500;
+            margin: 2rem 0; display: inline-block;
         }
 
         .user-status {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(45, 90, 61, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 0.8rem;
-            color: #2d5a3d;
-            cursor: pointer;
-            z-index: 1001;
+            position: absolute; top: 1rem; right: 1rem;
+            background: rgba(45, 90, 61, 0.1); padding: 0.5rem 1rem;
+            border-radius: 0.5rem; font-size: 0.8rem; color: #2d5a3d;
+            cursor: pointer; z-index: 1001;
         }
 
         .nav-tabs {
-            display: flex;
-            background: white;
-            border-radius: 0.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex; background: white; border-radius: 0.5rem;
+            margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            position: relative;
         }
 
         .nav-tab {
-            flex: 1;
-            padding: 1rem;
-            text-align: center;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            position: relative;
+            flex: 1; padding: 1rem; text-align: center; background: none;
+            border: none; cursor: pointer; font-size: 1rem;
+            transition: all 0.3s ease; position: relative;
         }
 
-        .nav-tab.active {
-            background: #2d5a3d;
-            color: white;
-        }
-
-        .nav-tab:hover:not(.active) {
-            background: #f3f4f6;
-        }
+        .nav-tab.active { background: #2d5a3d; color: white; }
+        .nav-tab:hover:not(.active) { background: #f3f4f6; }
 
         .nav-tab .tier-badge {
-            position: absolute;
-            top: 0.25rem;
-            right: 0.25rem;
-            background: #ff6b35;
-            color: white;
-            font-size: 0.6rem;
-            padding: 0.1rem 0.3rem;
-            border-radius: 0.75rem;
+            position: absolute; top: 0.25rem; right: 0.25rem;
+            background: #ff6b35; color: white; font-size: 0.6rem;
+            padding: 0.1rem 0.3rem; border-radius: 0.75rem;
         }
 
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
         .upload-zone {
             background: linear-gradient(135deg, #f0f9f4 0%, #e6ffed 100%);
-            border: 2px solid #10b981;
-            border-radius: 1rem;
-            padding: 3rem 2rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            border: 2px solid #10b981; border-radius: 1rem;
+            padding: 3rem 2rem; text-align: center; margin-bottom: 2rem;
+            transition: all 0.3s ease; cursor: pointer;
         }
 
         .camera-button {
-            background: #2d5a3d;
-            color: white;
-            border: none;
-            padding: 0.875rem 1.75rem;
-            border-radius: 0.375rem;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            margin: 0.5rem;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: inline-block;
+            background: #2d5a3d; color: white; border: none;
+            padding: 0.875rem 1.75rem; border-radius: 0.375rem;
+            font-size: 1rem; font-weight: 500; cursor: pointer;
+            margin: 0.5rem; transition: all 0.2s ease;
+            text-decoration: none; display: inline-block;
         }
 
-        .camera-button:hover {
-            background: #3b6951;
-        }
+        .camera-button:hover { background: #3b6951; }
 
         .camera-button.secondary {
-            background: white;
-            color: #2d5a3d;
-            border: 2px solid #2d5a3d;
+            background: white; color: #2d5a3d; border: 2px solid #2d5a3d;
         }
 
         .camera-container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto 2rem;
+            position: relative; width: 100%; max-width: 400px; margin: 0 auto 2rem;
         }
 
-        .video-preview {
-            width: 100%;
-            border-radius: 0.5rem;
-            background: #000;
-        }
+        .video-preview { width: 100%; border-radius: 0.5rem; background: #000; }
 
-        .camera-controls {
-            text-align: center;
-            margin-top: 1rem;
-        }
+        .camera-controls { text-align: center; margin-top: 1rem; }
 
         .capture-btn {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: #2d5a3d;
-            border: 4px solid white;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(45, 90, 61, 0.3);
-            margin: 0 10px;
+            width: 80px; height: 80px; border-radius: 50%;
+            background: #2d5a3d; border: 4px solid white; color: white;
+            font-size: 1.2rem; cursor: pointer; transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(45, 90, 61, 0.3); margin: 0 10px;
         }
 
-        .capture-btn:hover {
-            background: #3b6951;
-            transform: scale(1.05);
-        }
+        .capture-btn:hover { background: #3b6951; transform: scale(1.05); }
 
         /* CAMERA ENHANCEMENT STEP 1: ZOOM CONTROLS */
         .zoom-controls {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            z-index: 10;
+            position: absolute; top: 1rem; right: 1rem;
+            display: flex; flex-direction: column; gap: 0.5rem;
+            background: rgba(0, 0, 0, 0.7); padding: 0.75rem;
+            border-radius: 0.5rem; z-index: 10;
         }
 
         .zoom-button {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #2d5a3d;
-            border: 2px solid white;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            width: 40px; height: 40px; border-radius: 50%;
+            background: #2d5a3d; border: 2px solid white; color: white;
+            font-size: 1.2rem; font-weight: bold; cursor: pointer;
+            transition: all 0.2s ease; display: flex; align-items: center;
+            justify-content: center; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
-        .zoom-button:hover {
-            background: #3b6951;
-            transform: scale(1.1);
-        }
-
-        .zoom-button:active {
-            transform: scale(0.95);
-        }
+        .zoom-button:hover { background: #3b6951; transform: scale(1.1); }
+        .zoom-button:active { transform: scale(0.95); }
 
         .zoom-level-indicator {
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.8rem;
-            text-align: center;
-            margin-top: 0.25rem;
+            background: rgba(0, 0, 0, 0.7); color: white;
+            padding: 0.25rem 0.5rem; border-radius: 0.25rem;
+            font-size: 0.8rem; text-align: center; margin-top: 0.25rem;
         }
 
-        .video-wrapper {
-            position: relative;
-            overflow: hidden;
-            border-radius: 0.5rem;
-        }
+        .video-wrapper { position: relative; overflow: hidden; border-radius: 0.5rem; }
 
         .video-preview.zoomed {
-            transition: transform 0.3s ease;
-            transform-origin: center center;
+            transition: transform 0.3s ease; transform-origin: center center;
         }
 
-        /* Mobile optimizations for zoom controls */
         @media (max-width: 768px) {
-            .zoom-controls {
-                top: 0.5rem;
-                right: 0.5rem;
-                padding: 0.5rem;
-            }
-            
-            .zoom-button {
-                width: 45px;
-                height: 45px;
-                font-size: 1.3rem;
-            }
+            .zoom-controls { top: 0.5rem; right: 0.5rem; padding: 0.5rem; }
+            .zoom-button { width: 45px; height: 45px; font-size: 1.3rem; }
         }
         /* END CAMERA ENHANCEMENT STEP 1 */
 
-        .privacy-controls {
-            background: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
         .auth-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: white; padding: 2rem; border-radius: 1rem;
+            text-align: center; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 2rem;
         }
 
         .email-input {
-            width: 100%;
-            max-width: 400px;
-            padding: 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            margin: 1rem 0;
+            width: 100%; max-width: 400px; padding: 1rem;
+            border: 2px solid #e5e7eb; border-radius: 0.5rem;
+            font-size: 1rem; margin: 1rem 0;
         }
 
         .signup-benefits {
-            background: #f0f9f4;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin: 1rem 0;
-            text-align: left;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
+            background: #f0f9f4; padding: 1rem; border-radius: 0.5rem;
+            margin: 1rem 0; text-align: left; max-width: 400px;
+            margin-left: auto; margin-right: auto;
         }
 
-        .signup-benefits ul {
-            list-style: none;
-            padding: 0;
-        }
+        .signup-benefits ul { list-style: none; padding: 0; }
+        .signup-benefits li::before { content: "✓ "; color: #10b981; font-weight: bold; }
 
-        .signup-benefits li::before {
-            content: "✓ ";
-            color: #10b981;
-            font-weight: bold;
+        .privacy-controls {
+            background: white; padding: 2rem; border-radius: 1rem;
+            margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem; margin-bottom: 2rem;
         }
 
         .receipt-card {
-            background: white;
-            border-radius: 0.5rem;
-            overflow: hidden;
+            background: white; border-radius: 0.5rem; overflow: hidden;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
+            transition: all 0.3s ease; cursor: pointer;
         }
 
-        .receipt-thumbnail {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-
-        .receipt-info {
-            padding: 1rem;
-        }
-
-        .privacy-indicator {
-            background: #10b981;
-            color: white;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 1rem;
-            margin-top: 0.5rem;
-            display: inline-block;
-        }
-
-        .gallery-controls {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .filter-row {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .search-input {
-            flex: 1;
-            min-width: 200px;
-            padding: 0.75rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-        }
-
-        .filter-select {
-            padding: 0.75rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            background: white;
-        }
+        .receipt-thumbnail { width: 100%; height: 150px; object-fit: cover; }
+        .receipt-info { padding: 1rem; }
 
         .receipt-merchant {
-            color: #2d5a3d;
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 0.25rem;
+            color: #2d5a3d; font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem;
         }
 
         .receipt-amount {
-            color: #374151;
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-bottom: 0.25rem;
+            color: #374151; font-size: 1.2rem; font-weight: 500; margin-bottom: 0.25rem;
         }
 
         .receipt-category {
-            background: #e0f2fe;
-            color: #0369a1;
-            font-size: 0.7rem;
-            padding: 0.15rem 0.4rem;
-            border-radius: 0.75rem;
-            display: inline-block;
-            margin-top: 0.25rem;
+            background: #e0f2fe; color: #0369a1; font-size: 0.7rem;
+            padding: 0.15rem 0.4rem; border-radius: 0.75rem;
+            display: inline-block; margin-top: 0.25rem;
+        }
+
+        .privacy-indicator {
+            background: #10b981; color: white; font-size: 0.7rem;
+            padding: 0.2rem 0.5rem; border-radius: 1rem;
+            margin-top: 0.5rem; display: inline-block;
+        }
+
+        .gallery-controls {
+            display: flex; gap: 1rem; margin-bottom: 2rem;
+            flex-wrap: wrap; align-items: center;
+        }
+
+        .search-input {
+            flex: 1; min-width: 200px; padding: 0.75rem;
+            border: 2px solid #e5e7eb; border-radius: 0.5rem; font-size: 1rem;
+        }
+
+        .filter-select {
+            padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 0.5rem;
+            font-size: 1rem; background: white;
+        }
+
+        .filter-row {
+            display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;
         }
 
         .search-highlight {
-            background: #fef3c7;
-            color: #92400e;
-            padding: 0.1rem 0.2rem;
-            border-radius: 0.2rem;
-            font-weight: 600;
-            animation: highlightPulse 0.6s ease-in-out;
+            background: #fef3c7; color: #92400e; padding: 0.1rem 0.2rem;
+            border-radius: 0.2rem; font-weight: 600;
         }
 
         .search-highlight-merchant {
-            background: #dcfce7;
-            color: #166534;
-            padding: 0.1rem 0.2rem;
-            border-radius: 0.2rem;
-            font-weight: 600;
-            animation: highlightPulse 0.6s ease-in-out;
+            background: #dcfce7; color: #166534; padding: 0.1rem 0.2rem;
+            border-radius: 0.2rem; font-weight: 600;
         }
 
         .search-highlight-amount {
-            background: #dbeafe;
-            color: #1d4ed8;
-            padding: 0.1rem 0.2rem;
-            border-radius: 0.2rem;
-            font-weight: 600;
-            animation: highlightPulse 0.6s ease-in-out;
-        }
-
-        @keyframes highlightPulse {
-            0% { opacity: 0.5; transform: scale(0.95); }
-            50% { opacity: 1; transform: scale(1.02); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        .search-active .receipt-card {
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-        }
-
-        .search-active .receipt-card.search-match {
-            opacity: 1;
-            box-shadow: 0 4px 20px rgba(45, 90, 61, 0.2);
-            border: 2px solid #10b981;
-            transform: scale(1.02);
+            background: #dbeafe; color: #1d4ed8; padding: 0.1rem 0.2rem;
+            border-radius: 0.2rem; font-weight: 600;
         }
 
         .notification {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            background: #2d5a3d;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
+            position: fixed; top: 2rem; right: 2rem; background: #2d5a3d;
+            color: white; padding: 1rem 2rem; border-radius: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); z-index: 1000;
+            transform: translateX(400px); transition: transform 0.3s ease;
         }
 
-        .notification.show {
-            transform: translateX(0);
-        }
+        .notification.show { transform: translateX(0); }
+        .notification.error { background: #dc2626; }
+        .notification.success { background: #10b981; }
 
-        .notification.error {
-            background: #dc2626;
-        }
-
-        .notification.success {
-            background: #10b981;
-        }
-
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
 
         @media (max-width: 768px) {
-            body {
-                padding-top: 80px;
-            }
-
-            .gallery-controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .filter-row {
-                justify-content: space-between;
-                margin: 0.5rem 0;
-            }
-
-            .header-nav {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 0 1rem;
-            }
-
-            .tagline {
-                font-size: 1.3rem;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-                padding: 0 1rem;
-            }
+            body { padding-top: 80px; }
+            .gallery-controls { flex-direction: column; align-items: stretch; }
+            .filter-row { justify-content: space-between; margin: 0.5rem 0; }
+            .header-nav { flex-direction: column; gap: 1rem; padding: 0 1rem; }
+            .tagline { font-size: 1.3rem; }
+            .subtitle { font-size: 1rem; padding: 0 1rem; }
         }
     </style>
 </head>
@@ -629,10 +336,10 @@
                     <div class="video-wrapper">
                         <video id="videoPreview" class="video-preview" autoplay muted playsinline webkit-playsinline></video>
                         
-                        <div class="zoom-controls" data-camera-zoom-controls>
-                            <button class="zoom-button" data-zoom-in onclick="zoomIn()">+</button>
-                            <button class="zoom-button" data-zoom-out onclick="zoomOut()">-</button>
-                            <div class="zoom-level-indicator" data-zoom-level>1.0x</div>
+                        <div class="zoom-controls">
+                            <button class="zoom-button" onclick="zoomIn()">+</button>
+                            <button class="zoom-button" onclick="zoomOut()">-</button>
+                            <div class="zoom-level-indicator" id="zoomLevel">1.0x</div>
                         </div>
                     </div>
                     
@@ -651,78 +358,6 @@
 
                 <div id="upload-success" class="hidden"></div>
             </div>
-
-            <div style="margin-top: 3rem; padding: 2rem 0;">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
-                    <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); text-align: center;">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔒</div>
-                        <h3 style="font-size: 1.5rem; color: #2d5a3d; margin-bottom: 1rem;">Privacy-First Protection</h3>
-                        <p style="color: #6b7280; line-height: 1.6;">Unlike other receipt apps, we automatically detect and remove personal information before storing anything.</p>
-                    </div>
-
-                    <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); text-align: center;">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
-                        <h3 style="font-size: 1.5rem; color: #2d5a3d; margin-bottom: 1rem;">Instant Access Forever</h3>
-                        <p style="color: #6b7280; line-height: 1.6;">Get immediate permanent URLs for every receipt. No waiting 1-5 days like competitors.</p>
-                    </div>
-
-                    <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); text-align: center;">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">💰</div>
-                        <h3 style="font-size: 1.5rem; color: #2d5a3d; margin-bottom: 1rem;">Actually Free Forever</h3>
-                        <p style="color: #6b7280; line-height: 1.6;">Upload unlimited receipts and store 20 in your gallery—completely free.</p>
-                    </div>
-                </div>
-
-                <div style="margin: 4rem 0; text-align: center;">
-                    <h2 style="font-size: 2.5rem; color: #2d5a3d; margin-bottom: 2rem;">How ReceiptLinker Works</h2>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
-                        <div style="background: linear-gradient(135deg, #f0f9f4 0%, #e6ffed 100%); padding: 2rem; border-radius: 1rem; border: 2px solid #10b981;">
-                            <h4 style="color: #2d5a3d; margin-bottom: 1rem; font-size: 1.3rem;">Capture or Upload</h4>
-                            <p>Take a photo or upload your receipt image. Works with any device, any format.</p>
-                        </div>
-                        <div style="background: linear-gradient(135deg, #f0f9f4 0%, #e6ffed 100%); padding: 2rem; border-radius: 1rem; border: 2px solid #10b981;">
-                            <h4 style="color: #2d5a3d; margin-bottom: 1rem; font-size: 1.3rem;">Privacy Protection</h4>
-                            <p>Our AI automatically detects and redacts personal information while preserving important receipt details.</p>
-                        </div>
-                        <div style="background: linear-gradient(135deg, #f0f9f4 0%, #e6ffed 100%); padding: 2rem; border-radius: 1rem; border: 2px solid #10b981;">
-                            <h4 style="color: #2d5a3d; margin-bottom: 1rem; font-size: 1.3rem;">Get Permanent URL + Email</h4>
-                            <p>Receive an instant, permanent link that works forever. Get it delivered to your email immediately!</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin: 4rem 0; text-align: center;">
-                    <h2 style="font-size: 2.5rem; color: #2d5a3d; margin-bottom: 2rem;">Who Uses ReceiptLinker?</h2>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
-                        <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-left: 4px solid #2d5a3d;">
-                            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🛍️</div>
-                            <h4 style="color: #2d5a3d; margin-bottom: 1rem; font-size: 1.2rem;">Online Shoppers</h4>
-                            <p style="color: #6b7280; font-style: italic; line-height: 1.6;">"Perfect for returns and warranty claims. I just send the permanent link to customer service!"</p>
-                        </div>
-                        <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-left: 4px solid #2d5a3d;">
-                            <div style="font-size: 2.5rem; margin-bottom: 1rem;">💼</div>
-                            <h4 style="color: #2d5a3d; margin-bottom: 1rem; font-size: 1.2rem;">Small Business Owners</h4>
-                            <p style="color: #6b7280; font-style: italic; line-height: 1.6;">"Finally, a receipt app that protects my personal info while keeping expenses organized."</p>
-                        </div>
-                        <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-left: 4px solid #2d5a3d;">
-                            <div style="font-size: 2.5rem; margin-bottom: 1rem;">👪</div>
-                            <h4 style="color: #2d5a3d; margin-bottom: 1rem; font-size: 1.2rem;">Busy Families</h4>
-                            <p style="color: #6b7280; font-style: italic; line-height: 1.6;">"I love that I can store receipts without worrying about private information being exposed."</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin: 4rem 0; padding: 3rem; background: linear-gradient(135deg, #2d5a3d 0%, #3b6951 100%); color: white; border-radius: 2rem; text-align: center;">
-                    <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Ready to Never Lose a Receipt Again?</h2>
-                    <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">Join thousands who've switched to privacy-protected receipt storage</p>
-                    <button class="camera-button" style="background: white; color: #2d5a3d; padding: 1.25rem 2.5rem; font-size: 1.2rem; font-weight: bold;" onclick="document.getElementById('uploadEmail').scrollIntoView(); document.getElementById('uploadEmail').focus();">
-                        Start Free Account - No Credit Card Required
-                    </button>
-                    <div style="margin-top: 1rem;">
-                        <small style="opacity: 0.8; font-size: 0.9rem;">✅ Always free tier • ✅ No credit card required • ✅ Privacy guaranteed</small>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div id="gallery-tab" class="tab-content">
@@ -740,18 +375,18 @@
                     
                     <div class="filter-row">
                         <label for="dateFrom" style="font-size: 0.9rem; color: #374151;">From:</label>
-                        <input type="date" id="dateFrom" name="date-from" class="filter-select" style="width: auto;">
+                        <input type="date" id="dateFrom" class="filter-select" style="width: auto;">
                         
                         <label for="dateTo" style="font-size: 0.9rem; color: #374151;">To:</label>
-                        <input type="date" id="dateTo" name="date-to" class="filter-select" style="width: auto;">
+                        <input type="date" id="dateTo" class="filter-select" style="width: auto;">
                     </div>
                     
                     <div class="filter-row">
                         <label for="minAmount" style="font-size: 0.9rem; color: #374151;">Min $:</label>
-                        <input type="number" id="minAmount" name="amount-min" class="filter-select" placeholder="0.00" step="0.01" min="0" style="width: 80px;">
+                        <input type="number" id="minAmount" class="filter-select" placeholder="0.00" step="0.01" min="0" style="width: 80px;">
                         
                         <label for="maxAmount" style="font-size: 0.9rem; color: #374151;">Max $:</label>
-                        <input type="number" id="maxAmount" name="amount-max" class="filter-select" placeholder="999.99" step="0.01" min="0" style="width: 80px;">
+                        <input type="number" id="maxAmount" class="filter-select" placeholder="999.99" step="0.01" min="0" style="width: 80px;">
                     </div>
                     
                     <select id="sortSelect" class="filter-select">
@@ -761,7 +396,7 @@
                         <option value="lowest">Lowest Amount</option>
                     </select>
                     
-                    <button type="button" class="camera-button secondary" style="padding: 0.5rem 1rem;" id="clearFiltersBtn">Clear Filters</button>
+                    <button type="button" class="camera-button secondary" style="padding: 0.5rem 1rem;" onclick="clearAllFilters()">Clear Filters</button>
                 </div>
 
                 <div id="filterResultsCount" style="margin-bottom: 1rem; color: #6b7280; font-size: 0.9rem;"></div>
@@ -857,14 +492,7 @@
     </div>
 
     <script>
-        var CONFIG = {
-            SENDGRID_API_KEY: 'SG.demo_key_replace_with_real_key',
-            SENDGRID_FROM_EMAIL: 'noreply@receiptlinker.com',
-            SENDGRID_FROM_NAME: 'ReceiptLinker'
-        };
-
         var currentUser = null;
-        var currentTier = 'free';
         var videoStream = null;
         var currentImage = null;
         var allReceipts = [];
@@ -903,7 +531,7 @@
         }
 
         function updateZoomIndicator() {
-            var indicator = document.querySelector('[data-zoom-level]');
+            var indicator = document.getElementById('zoomLevel');
             if (indicator) {
                 indicator.textContent = currentZoom.toFixed(1) + 'x';
             }
@@ -923,21 +551,39 @@
         }
 
         function setupEventListeners() {
-            document.getElementById('searchInput').addEventListener('input', applyAllFilters);
-            document.getElementById('dateFrom').addEventListener('change', applyAllFilters);
-            document.getElementById('dateTo').addEventListener('change', applyAllFilters);
-            document.getElementById('minAmount').addEventListener('input', applyAllFilters);
-            document.getElementById('maxAmount').addEventListener('input', applyAllFilters);
-            document.getElementById('sortSelect').addEventListener('change', applyAllFilters);
-            document.getElementById('clearFiltersBtn').addEventListener('click', clearAllFilters);
+            var searchInput = document.getElementById('searchInput');
+            if (searchInput) searchInput.addEventListener('input', applyAllFilters);
+            
+            var dateFrom = document.getElementById('dateFrom');
+            if (dateFrom) dateFrom.addEventListener('change', applyAllFilters);
+            
+            var dateTo = document.getElementById('dateTo');
+            if (dateTo) dateTo.addEventListener('change', applyAllFilters);
+            
+            var minAmount = document.getElementById('minAmount');
+            if (minAmount) minAmount.addEventListener('input', applyAllFilters);
+            
+            var maxAmount = document.getElementById('maxAmount');
+            if (maxAmount) maxAmount.addEventListener('input', applyAllFilters);
+            
+            var sortSelect = document.getElementById('sortSelect');
+            if (sortSelect) sortSelect.addEventListener('change', applyAllFilters);
         }
 
         function loadPrivacyStats() {
             var stats = JSON.parse(localStorage.getItem('privacyStats') || '{"namesProtected":0,"phonesRedacted":0,"emailsRedacted":0,"addressesProtected":0}');
-            document.getElementById('namesProtected').textContent = stats.namesProtected;
-            document.getElementById('phonesRedacted').textContent = stats.phonesRedacted;
-            document.getElementById('emailsRedacted').textContent = stats.emailsRedacted;
-            document.getElementById('addressesProtected').textContent = stats.addressesProtected;
+            
+            var namesElement = document.getElementById('namesProtected');
+            if (namesElement) namesElement.textContent = stats.namesProtected;
+            
+            var phonesElement = document.getElementById('phonesRedacted');
+            if (phonesElement) phonesElement.textContent = stats.phonesRedacted;
+            
+            var emailsElement = document.getElementById('emailsRedacted');
+            if (emailsElement) emailsElement.textContent = stats.emailsRedacted;
+            
+            var addressesElement = document.getElementById('addressesProtected');
+            if (addressesElement) addressesElement.textContent = stats.addressesProtected;
         }
 
         function switchTab(tabName) {
@@ -1160,10 +806,9 @@
                 };
 
                 saveReceiptToStorage(receipt);
-                sendReceiptConfirmationEmail(receipt);
                 showUploadSuccess(receipt);
                 
-                showNotification('Receipt uploaded and emailed!', 'success');
+                showNotification('Receipt uploaded successfully!', 'success');
             }, 2000);
         }
 
@@ -1176,86 +821,24 @@
             localStorage.setItem('receipts', JSON.stringify(allStoredReceipts));
         }
 
-        function sendReceiptConfirmationEmail(receipt) {
-            showNotification('Sending email confirmation...', 'info');
-            
-            var uploadDate = new Date(receipt.timestamp).toLocaleDateString();
-            
-            var emailData = {
-                to: currentUser.email,
-                subject: 'Receipt Saved & Privacy-Protected!',
-                html: '<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f9f9f9; padding: 20px;">' +
-                    '<div style="background: white; padding: 30px; border-radius: 10px;">' +
-                    '<div style="text-align: center; margin-bottom: 30px;">' +
-                    '<h1 style="color: #2d5a3d; margin: 0;">ReceiptLinker</h1>' +
-                    '<p style="color: #6b7280; margin: 5px 0;">Privacy-First Receipt Storage</p>' +
-                    '</div>' +
-                    '<div style="background: #f0f9f4; padding: 20px; border-radius: 8px; margin-bottom: 20px;">' +
-                    '<h2 style="color: #2d5a3d; margin-top: 0;">Receipt Successfully Saved!</h2>' +
-                    '<p style="color: #374151;">Your receipt has been privacy-protected and is ready to use.</p>' +
-                    '</div>' +
-                    '<div style="margin-bottom: 20px;">' +
-                    '<h3 style="color: #2d5a3d;">Privacy Protection Applied</h3>' +
-                    '<p style="color: #374151;">' + receipt.redactionCount + ' sensitive items were automatically detected and redacted before storage.</p>' +
-                    '</div>' +
-                    '<div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin-bottom: 20px;">' +
-                    '<h3 style="color: #0369a1; margin-top: 0;">Your Permanent URL:</h3>' +
-                    '<p style="word-break: break-all; background: white; padding: 10px; border-radius: 5px; margin: 10px 0;">' +
-                    '<a href="' + receipt.url + '" style="color: #2d5a3d; text-decoration: none;">' + receipt.url + '</a>' +
-                    '</p>' +
-                    '<p style="color: #0369a1; font-size: 14px; margin: 0;">This link works forever and can be shared with customer service for returns/warranties!</p>' +
-                    '</div>' +
-                    '<div style="border-top: 1px solid #e5e7eb; padding-top: 20px; margin-top: 20px;">' +
-                    '<p style="color: #6b7280; font-size: 14px; margin: 0;"><strong>Upload Date:</strong> ' + uploadDate + '</p>' +
-                    '<p style="color: #6b7280; font-size: 14px; margin: 5px 0 0 0;"><strong>Status:</strong> Privacy-Protected</p>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>'
-            };
-
-            console.log('EMAIL DEMO - Would send:', emailData);
-            
-            setTimeout(function() {
-                showNotification('Email sent successfully! Check your inbox.', 'success');
-            }, 1500);
-        }
-
         function showUploadSuccess(receipt) {
             document.getElementById('upload-success').innerHTML = 
                 '<div style="background: white; padding: 2rem; border-radius: 1rem; text-align: center; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">' +
-                '<h3 style="color: #2d5a3d; margin-bottom: 1rem;">Receipt Saved & Email Sent!</h3>' +
-                '<p style="margin-bottom: 1rem;">Your receipt has been privacy-protected and saved successfully.</p>' +
+                '<h3 style="color: #2d5a3d; margin-bottom: 1rem;">Receipt Saved Successfully!</h3>' +
+                '<p style="margin-bottom: 1rem;">Your receipt has been privacy-protected and saved.</p>' +
                 '<div style="background: #f0f9f4; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">' +
                 '<strong style="color: #2d5a3d;">Privacy Protection Applied:</strong> ' + receipt.redactionCount + ' items automatically redacted<br>' +
-                '<strong style="color: #2d5a3d;">Email Sent To:</strong> ' + currentUser.email + '<br>' +
-                '<small style="color: #6b7280;">Check your inbox for the permanent URL!</small>' +
+                '<strong style="color: #2d5a3d;">Saved To:</strong> ' + currentUser.email + '<br>' +
                 '</div>' +
                 '<div style="background: #e5e7eb; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0; word-break: break-all; font-family: monospace; font-size: 0.9rem;">' +
                 receipt.url +
                 '</div>' +
                 '<div style="margin-top: 1rem;">' +
-                '<button class="camera-button secondary" onclick="copyToClipboard(\'' + receipt.url + '\')" style="margin: 0.25rem;">Copy Link</button>' +
                 '<button class="camera-button" onclick="cancelUpload()" style="margin: 0.25rem;">Done</button>' +
                 '</div>' +
                 '</div>';
             
             document.getElementById('upload-success').classList.remove('hidden');
-        }
-
-        function copyToClipboard(url) {
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(url).then(function() {
-                    showNotification('Receipt URL copied to clipboard!', 'success');
-                });
-            } else {
-                var textArea = document.createElement('textarea');
-                textArea.value = url;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                showNotification('Receipt URL copied to clipboard!', 'success');
-            }
         }
 
         function cancelUpload() {
@@ -1285,42 +868,231 @@
 
         function generateMockReceiptData() {
             var mockReceipts = [
-                { id: '1', merchant: 'Target', amount: 45.67, category: 'retail', date: '2025-08-20' },
-                { id: '2', merchant: 'Walmart', amount: 89.23, category: 'retail', date: '2025-08-19' },
-                { id: '3', merchant: 'CVS Pharmacy', amount: 23.45, category: 'medical', date: '2025-08-18' },
-                { id: '4', merchant: 'Starbucks', amount: 12.75, category: 'food', date: '2025-08-17' },
-                { id: '5', merchant: 'Shell Gas Station', amount: 52.10, category: 'gas', date: '2025-08-16' },
-                { id: '6', merchant: 'Best Buy', amount: 199.99, category: 'electronics', date: '2025-08-15' },
-                { id: '7', merchant: 'McDonalds', amount: 8.45, category: 'food', date: '2025-08-14' },
-                { id: '8', merchant: 'Home Depot', amount: 134.56, category: 'home', date: '2025-08-13' },
-                { id: '9', merchant: 'Kroger', amount: 67.89, category: 'groceries', date: '2025-08-12' },
-                { id: '10', merchant: 'Amazon', amount: 78.99, category: 'retail', date: '2025-08-11' },
-                { id: '11', merchant: 'Chipotle', amount: 15.30, category: 'food', date: '2025-08-10' },
-                { id: '12', merchant: 'Exxon Mobil', amount: 48.75, category: 'gas', date: '2025-08-09' }
+                { id: '1', merchant: 'Target', amount: 45.67, category: 'retail', date: '2025-08-20', imageData: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==' },
+                { id: '2', merchant: 'Walmart', amount: 89.23, category: 'retail', date: '2025-08-19', imageData: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==' },
+                { id: '3', merchant: 'CVS Pharmacy', amount: 23.45, category: 'medical', date: '2025-08-18', imageData: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==' },
+                { id: '4', merchant: 'Starbucks', amount: 12.75, category: 'food', date: '2025-08-17', imageData: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==' },
+                { id: '5', merchant: 'Shell Gas Station', amount: 52.10, category: 'gas', date: '2025-08-16', imageData: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==' }
             ];
-
-            for (var i = 0; i < mockReceipts.length; i++) {
-                mockReceipts[i].imageData = generateMockReceiptImage(mockReceipts[i].merchant, mockReceipts[i].amount);
-            }
 
             return mockReceipts;
         }
 
-        function generateMockReceiptImage(merchantName, amount) {
-            var canvas = document.createElement('canvas');
-            canvas.width = 200;
-            canvas.height = 280;
-            var ctx = canvas.getContext('2d');
+        function applyAllFilters() {
+            var searchInput = document.getElementById('searchInput');
+            var searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
             
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            var dateFromInput = document.getElementById('dateFrom');
+            var dateFrom = dateFromInput ? dateFromInput.value : '';
             
-            ctx.strokeStyle = '#e5e7eb';
-            ctx.lineWidth = 1;
-            ctx.strokeRect(0, 0, canvas.width, canvas.height);
+            var dateToInput = document.getElementById('dateTo');
+            var dateTo = dateToInput ? dateToInput.value : '';
             
-            ctx.fillStyle = '#2d5a3d';
-            ctx.fillRect(0, 0, canvas.width, 60);
+            var minAmountInput = document.getElementById('minAmount');
+            var minAmount = minAmountInput ? (parseFloat(minAmountInput.value) || 0) : 0;
             
-            ctx.fillStyle = '#ffffff';
-            ctx.font
+            var maxAmountInput = document.getElementById('maxAmount');
+            var maxAmount = maxAmountInput ? (parseFloat(maxAmountInput.value) || Infinity) : Infinity;
+            
+            var sortSelectInput = document.getElementById('sortSelect');
+            var sortBy = sortSelectInput ? sortSelectInput.value : 'newest';
+
+            filteredReceipts = allReceipts.filter(function(receipt) {
+                var matchesSearch = true;
+                var matchesDate = true;
+                var matchesAmount = true;
+
+                if (searchQuery) {
+                    matchesSearch = (receipt.merchant && receipt.merchant.toLowerCase().indexOf(searchQuery) !== -1) ||
+                                   (receipt.category && receipt.category.toLowerCase().indexOf(searchQuery) !== -1) ||
+                                   (receipt.amount && receipt.amount.toString().indexOf(searchQuery) !== -1) ||
+                                   (receipt.date && receipt.date.indexOf(searchQuery) !== -1);
+                }
+
+                if (dateFrom || dateTo) {
+                    var receiptDate = new Date(receipt.date);
+                    if (dateFrom && receiptDate < new Date(dateFrom)) {
+                        matchesDate = false;
+                    }
+                    if (dateTo && receiptDate > new Date(dateTo)) {
+                        matchesDate = false;
+                    }
+                }
+
+                if (receipt.amount < minAmount || receipt.amount > maxAmount) {
+                    matchesAmount = false;
+                }
+
+                return matchesSearch && matchesDate && matchesAmount;
+            });
+
+            filteredReceipts.sort(function(a, b) {
+                switch(sortBy) {
+                    case 'oldest':
+                        return new Date(a.date) - new Date(b.date);
+                    case 'highest':
+                        return b.amount - a.amount;
+                    case 'lowest':
+                        return a.amount - b.amount;
+                    default:
+                        return new Date(b.date) - new Date(a.date);
+                }
+            });
+
+            displayFilteredReceipts();
+            updateResultsCount();
+        }
+
+        function displayFilteredReceipts() {
+            var grid = document.getElementById('receiptGrid');
+            if (!grid) return;
+            
+            var searchInput = document.getElementById('searchInput');
+            var searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            
+            grid.innerHTML = '';
+            
+            if (filteredReceipts.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #6b7280;">' +
+                               '<h3>No receipts found</h3>' +
+                               '<p>Try adjusting your search or filters</p></div>';
+                return;
+            }
+            
+            for (var i = 0; i < filteredReceipts.length; i++) {
+                var receipt = filteredReceipts[i];
+                var card = createReceiptCard(receipt, searchQuery);
+                grid.appendChild(card);
+            }
+        }
+
+        function createReceiptCard(receipt, searchQuery) {
+            var card = document.createElement('div');
+            card.className = 'receipt-card';
+            
+            var categoryClass = receipt.category ? receipt.category.toUpperCase() : 'GENERAL';
+            var merchant = receipt.merchant || 'Unknown Merchant';
+            var amount = receipt.amount || 0;
+            
+            card.innerHTML = 
+                '<img src="' + receipt.imageData + '" alt="Receipt" class="receipt-thumbnail">' +
+                '<div class="receipt-info">' +
+                '<div class="receipt-merchant">' + merchant + '</div>' +
+                '<div class="receipt-amount">$' + amount.toFixed(2) + '</div>' +
+                '<div style="color: #6b7280; font-size: 0.9rem; margin-bottom: 0.5rem;">' + 
+                new Date(receipt.date).toLocaleDateString() + '</div>' +
+                '<div class="receipt-category">' + categoryClass + '</div>' +
+                '<div class="privacy-indicator">Privacy Protected</div>' +
+                '</div>';
+            
+            return card;
+        }
+
+        function updateResultsCount() {
+            var countDiv = document.getElementById('filterResultsCount');
+            if (!countDiv) return;
+            
+            var searchInput = document.getElementById('searchInput');
+            var searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            
+            if (filteredReceipts.length < allReceipts.length) {
+                var message = 'Showing ' + filteredReceipts.length + ' of ' + allReceipts.length + ' receipts';
+                
+                if (searchQuery) {
+                    message += ' matching "' + searchQuery + '"';
+                }
+                
+                countDiv.textContent = message;
+                countDiv.style.display = 'block';
+            } else {
+                countDiv.style.display = 'none';
+            }
+        }
+
+        function clearAllFilters() {
+            var searchInput = document.getElementById('searchInput');
+            if (searchInput) searchInput.value = '';
+            
+            var dateFrom = document.getElementById('dateFrom');
+            if (dateFrom) dateFrom.value = '';
+            
+            var dateTo = document.getElementById('dateTo');
+            if (dateTo) dateTo.value = '';
+            
+            var minAmount = document.getElementById('minAmount');
+            if (minAmount) minAmount.value = '';
+            
+            var maxAmount = document.getElementById('maxAmount');
+            if (maxAmount) maxAmount.value = '';
+            
+            var sortSelect = document.getElementById('sortSelect');
+            if (sortSelect) sortSelect.value = 'newest';
+            
+            applyAllFilters();
+            showNotification('All filters cleared', 'success');
+        }
+
+        function showNotification(message, type) {
+            var notification = document.getElementById('notification');
+            var text = document.getElementById('notificationText');
+            
+            notification.className = 'notification show';
+            if (type) notification.classList.add(type);
+            
+            text.textContent = message;
+            
+            setTimeout(function() {
+                notification.classList.remove('show');
+                setTimeout(function() {
+                    notification.className = 'notification';
+                }, 300);
+            }, 4000);
+        }
+
+        function saveUserState() {
+            if (currentUser) {
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            }
+        }
+
+        function loadUserState() {
+            try {
+                var savedUser = localStorage.getItem('currentUser');
+                if (savedUser) {
+                    currentUser = JSON.parse(savedUser);
+                    updateUserStatus();
+                }
+            } catch (e) {
+                console.log('No saved user state');
+            }
+        }
+
+        function updateUserStatus() {
+            var userStatus = document.getElementById('userStatus');
+            if (currentUser && userStatus) {
+                userStatus.textContent = currentUser.email + ' (FREE)';
+                userStatus.style.cursor = 'pointer';
+                userStatus.onclick = function() {
+                    if (confirm('Sign out?')) {
+                        signOut();
+                    }
+                };
+            } else if (userStatus) {
+                userStatus.textContent = 'Not signed in';
+                userStatus.style.cursor = 'default';
+                userStatus.onclick = null;
+            }
+        }
+
+        function signOut() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateUserStatus();
+            switchTab('upload');
+            showNotification('Signed out', 'info');
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+</body>
+</html>
