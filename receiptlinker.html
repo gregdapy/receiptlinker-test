@@ -157,6 +157,216 @@
         }
         /* END CAMERA ENHANCEMENT STEP 1 */
 
+        /* CAMERA ENHANCEMENT STEP 2: POST-CAPTURE PREVIEW SCREEN */
+        .post-capture-screen {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .captured-image-container {
+            position: relative;
+            margin: 1rem auto 2rem;
+            max-width: 400px;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .captured-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .enhancement-controls {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 2px solid #e2e8f0;
+        }
+
+        .enhancement-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .enhancement-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .enhancement-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2d5a3d;
+            margin-bottom: 0.75rem;
+            text-align: left;
+        }
+
+        .enhancement-options {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .enhancement-button {
+            background: white;
+            border: 2px solid #e2e8f0;
+            color: #475569;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 80px;
+        }
+
+        .enhancement-button:hover {
+            border-color: #2d5a3d;
+            background: #f0f9f4;
+        }
+
+        .enhancement-button.active {
+            background: #2d5a3d;
+            color: white;
+            border-color: #2d5a3d;
+        }
+
+        .enhancement-slider-container {
+            margin-top: 0.75rem;
+        }
+
+        .enhancement-slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #e2e8f0;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .enhancement-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #2d5a3d;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .enhancement-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #2d5a3d;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .action-button {
+            padding: 0.875rem 1.75rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+            min-width: 120px;
+        }
+
+        .action-button.primary {
+            background: #2d5a3d;
+            color: white;
+        }
+
+        .action-button.primary:hover {
+            background: #3b6951;
+        }
+
+        .action-button.secondary {
+            background: white;
+            color: #2d5a3d;
+            border-color: #2d5a3d;
+        }
+
+        .action-button.secondary:hover {
+            background: #f0f9f4;
+        }
+
+        .action-button.accent {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .action-button.accent:hover {
+            background: #d97706;
+        }
+
+        .action-button.danger {
+            background: #dc2626;
+            color: white;
+        }
+
+        .action-button.danger:hover {
+            background: #b91c1c;
+        }
+
+        .enhancement-preview-note {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .post-capture-screen {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .enhancement-options {
+                justify-content: flex-start;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-button {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+        /* END CAMERA ENHANCEMENT STEP 2 */
+
         .auth-container {
             background: white; padding: 2rem; border-radius: 1rem;
             text-align: center; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -348,6 +558,61 @@
                         <button class="camera-button secondary" onclick="stopCamera()">Stop Camera</button>
                     </div>
                 </div>
+
+                <!-- CAMERA ENHANCEMENT STEP 2: POST-CAPTURE PREVIEW SCREEN -->
+                <div id="post-capture-preview" class="post-capture-screen hidden">
+                    <h3 style="color: #2d5a3d; margin-bottom: 1rem;">Review Your Capture</h3>
+                    
+                    <div class="captured-image-container">
+                        <img id="capturedImagePreview" class="captured-image" alt="Captured receipt">
+                    </div>
+                    
+                    <div class="enhancement-preview-note">
+                        📷 Tip: Use the enhancement options below to improve image quality before saving
+                    </div>
+                    
+                    <div class="enhancement-controls">
+                        <div class="enhancement-section">
+                            <div class="enhancement-title">Quick Enhancements</div>
+                            <div class="enhancement-options">
+                                <button class="enhancement-button" data-enhancement="sharpen" onclick="applyQuickEnhancement('sharpen')">Sharpen</button>
+                                <button class="enhancement-button" data-enhancement="brighten" onclick="applyQuickEnhancement('brighten')">Brighten</button>
+                                <button class="enhancement-button" data-enhancement="contrast" onclick="applyQuickEnhancement('contrast')">Contrast</button>
+                                <button class="enhancement-button active" data-enhancement="original" onclick="applyQuickEnhancement('original')">Original</button>
+                            </div>
+                        </div>
+                        
+                        <div class="enhancement-section">
+                            <div class="enhancement-title">Fine Adjustments</div>
+                            <div class="enhancement-slider-container">
+                                <label style="font-size: 0.875rem; color: #64748b; display: block; margin-bottom: 0.5rem;">Brightness</label>
+                                <input type="range" class="enhancement-slider" id="brightnessSlider" min="-50" max="50" value="0" oninput="adjustBrightness(this.value)">
+                                <div class="slider-labels">
+                                    <span>Dark</span>
+                                    <span>Normal</span>
+                                    <span>Bright</span>
+                                </div>
+                            </div>
+                            
+                            <div class="enhancement-slider-container" style="margin-top: 1rem;">
+                                <label style="font-size: 0.875rem; color: #64748b; display: block; margin-bottom: 0.5rem;">Contrast</label>
+                                <input type="range" class="enhancement-slider" id="contrastSlider" min="-50" max="50" value="0" oninput="adjustContrast(this.value)">
+                                <div class="slider-labels">
+                                    <span>Low</span>
+                                    <span>Normal</span>
+                                    <span>High</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-button danger" onclick="retakePhoto()">Retake</button>
+                        <button class="action-button accent" onclick="addPage()">Add Page</button>
+                        <button class="action-button primary" onclick="saveEnhancedImage()">Save</button>
+                    </div>
+                </div>
+                <!-- END CAMERA ENHANCEMENT STEP 2 -->
 
                 <div id="privacy-processing" class="privacy-controls hidden">
                     <h3>Privacy Protection in Progress</h3>
@@ -544,6 +809,176 @@
         }
         // END CAMERA ENHANCEMENT STEP 1
 
+        // CAMERA ENHANCEMENT STEP 2: POST-CAPTURE PREVIEW FUNCTIONALITY
+        var originalImageData = null;
+        var currentEnhancedImage = null;
+        var capturedPages = [];
+
+        function showPostCapturePreview() {
+            var previewImg = document.getElementById('capturedImagePreview');
+            if (previewImg && currentImage) {
+                previewImg.src = currentImage;
+                originalImageData = currentImage;
+                currentEnhancedImage = currentImage;
+                
+                resetEnhancements();
+                
+                document.getElementById('post-capture-preview').classList.remove('hidden');
+                showNotification('Review your capture and apply enhancements', 'info');
+            }
+        }
+
+        function resetEnhancements() {
+            // Reset all enhancement buttons
+            var enhancementButtons = document.querySelectorAll('.enhancement-button');
+            for (var i = 0; i < enhancementButtons.length; i++) {
+                enhancementButtons[i].classList.remove('active');
+            }
+            
+            // Set original as active
+            var originalButton = document.querySelector('[data-enhancement="original"]');
+            if (originalButton) {
+                originalButton.classList.add('active');
+            }
+            
+            // Reset sliders
+            var brightnessSlider = document.getElementById('brightnessSlider');
+            if (brightnessSlider) brightnessSlider.value = '0';
+            
+            var contrastSlider = document.getElementById('contrastSlider');
+            if (contrastSlider) contrastSlider.value = '0';
+            
+            // Reset image to original
+            applyEnhancementsToImage();
+        }
+
+        function applyQuickEnhancement(enhancement) {
+            // Update button states
+            var enhancementButtons = document.querySelectorAll('.enhancement-button');
+            for (var i = 0; i < enhancementButtons.length; i++) {
+                enhancementButtons[i].classList.remove('active');
+            }
+            
+            var clickedButton = document.querySelector('[data-enhancement="' + enhancement + '"]');
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            }
+            
+            // Reset sliders when using quick enhancements
+            var brightnessSlider = document.getElementById('brightnessSlider');
+            if (brightnessSlider) brightnessSlider.value = '0';
+            
+            var contrastSlider = document.getElementById('contrastSlider');
+            if (contrastSlider) contrastSlider.value = '0';
+            
+            // Apply the enhancement
+            switch(enhancement) {
+                case 'sharpen':
+                    applyCanvasFilter('contrast(1.2) brightness(1.1) saturate(1.1)');
+                    break;
+                case 'brighten':
+                    applyCanvasFilter('brightness(1.3) contrast(1.1)');
+                    break;
+                case 'contrast':
+                    applyCanvasFilter('contrast(1.4) brightness(1.1)');
+                    break;
+                case 'original':
+                default:
+                    applyCanvasFilter('none');
+                    break;
+            }
+            
+            showNotification(enhancement === 'original' ? 'Reset to original' : 'Applied ' + enhancement + ' enhancement', 'success');
+        }
+
+        function adjustBrightness(value) {
+            applyEnhancementsToImage();
+        }
+
+        function adjustContrast(value) {
+            applyEnhancementsToImage();
+        }
+
+        function applyEnhancementsToImage() {
+            var brightnessSlider = document.getElementById('brightnessSlider');
+            var contrastSlider = document.getElementById('contrastSlider');
+            
+            var brightness = brightnessSlider ? parseInt(brightnessSlider.value) : 0;
+            var contrast = contrastSlider ? parseInt(contrastSlider.value) : 0;
+            
+            // Convert slider values to CSS filter values
+            var brightnessValue = 1 + (brightness / 100);
+            var contrastValue = 1 + (contrast / 100);
+            
+            var filterString = 'brightness(' + brightnessValue + ') contrast(' + contrastValue + ')';
+            
+            applyCanvasFilter(filterString);
+        }
+
+        function applyCanvasFilter(filterString) {
+            if (!originalImageData) return;
+            
+            var canvas = document.createElement('canvas');
+            var ctx = canvas.getContext('2d');
+            var img = new Image();
+            
+            img.onload = function() {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                
+                // Apply filter
+                ctx.filter = filterString;
+                ctx.drawImage(img, 0, 0);
+                
+                // Update the preview image
+                currentEnhancedImage = canvas.toDataURL('image/jpeg', 0.95);
+                var previewImg = document.getElementById('capturedImagePreview');
+                if (previewImg) {
+                    previewImg.src = currentEnhancedImage;
+                }
+            };
+            
+            img.src = originalImageData;
+        }
+
+        function retakePhoto() {
+            hidePostCapturePreview();
+            startCamera();
+            showNotification('Camera ready for retake', 'info');
+        }
+
+        function addPage() {
+            if (currentEnhancedImage) {
+                capturedPages.push(currentEnhancedImage);
+                showNotification('Page ' + capturedPages.length + ' added. Position next page.', 'success');
+            }
+            
+            hidePostCapturePreview();
+            startCamera();
+        }
+
+        function saveEnhancedImage() {
+            if (currentEnhancedImage) {
+                currentImage = currentEnhancedImage;
+                
+                // If we have multiple pages, combine them
+                if (capturedPages.length > 0) {
+                    capturedPages.push(currentEnhancedImage);
+                    showNotification('Saving ' + capturedPages.length + '-page receipt...', 'info');
+                } else {
+                    showNotification('Saving enhanced receipt...', 'info');
+                }
+                
+                hidePostCapturePreview();
+                startPrivacyProcessing();
+            }
+        }
+
+        function hidePostCapturePreview() {
+            document.getElementById('post-capture-preview').classList.add('hidden');
+        }
+        // END CAMERA ENHANCEMENT STEP 2
+
         function initializeApp() {
             loadUserState();
             loadPrivacyStats();
@@ -684,7 +1119,7 @@
             var reader = new FileReader();
             reader.onload = function(e) {
                 currentImage = e.target.result;
-                startPrivacyProcessing();
+                showPostCapturePreview();
             };
             reader.readAsDataURL(file);
         }
@@ -738,9 +1173,9 @@
             currentImage = canvas.toDataURL('image/jpeg', 0.95);
             
             stopCamera();
-            startPrivacyProcessing();
+            showPostCapturePreview();
             
-            showNotification('Photo captured! Processing privacy protection...', 'success');
+            showNotification('Photo captured! Review and enhance before saving', 'success');
         }
 
         function stopCamera() {
@@ -802,11 +1237,15 @@
                     timestamp: new Date().toISOString(),
                     imageData: currentImage,
                     url: receiptUrl,
-                    redactionCount: 3
+                    redactionCount: 3,
+                    pages: capturedPages.length > 0 ? capturedPages.length + 1 : 1
                 };
 
                 saveReceiptToStorage(receipt);
                 showUploadSuccess(receipt);
+                
+                // Reset captured pages for next upload
+                capturedPages = [];
                 
                 showNotification('Receipt uploaded successfully!', 'success');
             }, 2000);
@@ -822,13 +1261,16 @@
         }
 
         function showUploadSuccess(receipt) {
+            var pageText = receipt.pages && receipt.pages > 1 ? receipt.pages + '-page ' : '';
+            
             document.getElementById('upload-success').innerHTML = 
                 '<div style="background: white; padding: 2rem; border-radius: 1rem; text-align: center; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">' +
-                '<h3 style="color: #2d5a3d; margin-bottom: 1rem;">Receipt Saved Successfully!</h3>' +
-                '<p style="margin-bottom: 1rem;">Your receipt has been privacy-protected and saved.</p>' +
+                '<h3 style="color: #2d5a3d; margin-bottom: 1rem;">' + pageText + 'Receipt Saved Successfully!</h3>' +
+                '<p style="margin-bottom: 1rem;">Your receipt has been enhanced and privacy-protected.</p>' +
                 '<div style="background: #f0f9f4; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">' +
                 '<strong style="color: #2d5a3d;">Privacy Protection Applied:</strong> ' + receipt.redactionCount + ' items automatically redacted<br>' +
                 '<strong style="color: #2d5a3d;">Saved To:</strong> ' + currentUser.email + '<br>' +
+                (receipt.pages > 1 ? '<strong style="color: #2d5a3d;">Pages:</strong> ' + receipt.pages + ' pages captured<br>' : '') +
                 '</div>' +
                 '<div style="background: #e5e7eb; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0; word-break: break-all; font-family: monospace; font-size: 0.9rem;">' +
                 receipt.url +
@@ -844,7 +1286,11 @@
         function cancelUpload() {
             document.getElementById('privacy-processing').classList.add('hidden');
             document.getElementById('upload-success').classList.add('hidden');
+            hidePostCapturePreview();
             currentImage = null;
+            originalImageData = null;
+            currentEnhancedImage = null;
+            capturedPages = [];
         }
 
         function loadGallery() {
@@ -891,208 +1337,4 @@
             var minAmountInput = document.getElementById('minAmount');
             var minAmount = minAmountInput ? (parseFloat(minAmountInput.value) || 0) : 0;
             
-            var maxAmountInput = document.getElementById('maxAmount');
-            var maxAmount = maxAmountInput ? (parseFloat(maxAmountInput.value) || Infinity) : Infinity;
-            
-            var sortSelectInput = document.getElementById('sortSelect');
-            var sortBy = sortSelectInput ? sortSelectInput.value : 'newest';
-
-            filteredReceipts = allReceipts.filter(function(receipt) {
-                var matchesSearch = true;
-                var matchesDate = true;
-                var matchesAmount = true;
-
-                if (searchQuery) {
-                    matchesSearch = (receipt.merchant && receipt.merchant.toLowerCase().indexOf(searchQuery) !== -1) ||
-                                   (receipt.category && receipt.category.toLowerCase().indexOf(searchQuery) !== -1) ||
-                                   (receipt.amount && receipt.amount.toString().indexOf(searchQuery) !== -1) ||
-                                   (receipt.date && receipt.date.indexOf(searchQuery) !== -1);
-                }
-
-                if (dateFrom || dateTo) {
-                    var receiptDate = new Date(receipt.date);
-                    if (dateFrom && receiptDate < new Date(dateFrom)) {
-                        matchesDate = false;
-                    }
-                    if (dateTo && receiptDate > new Date(dateTo)) {
-                        matchesDate = false;
-                    }
-                }
-
-                if (receipt.amount < minAmount || receipt.amount > maxAmount) {
-                    matchesAmount = false;
-                }
-
-                return matchesSearch && matchesDate && matchesAmount;
-            });
-
-            filteredReceipts.sort(function(a, b) {
-                switch(sortBy) {
-                    case 'oldest':
-                        return new Date(a.date) - new Date(b.date);
-                    case 'highest':
-                        return b.amount - a.amount;
-                    case 'lowest':
-                        return a.amount - b.amount;
-                    default:
-                        return new Date(b.date) - new Date(a.date);
-                }
-            });
-
-            displayFilteredReceipts();
-            updateResultsCount();
-        }
-
-        function displayFilteredReceipts() {
-            var grid = document.getElementById('receiptGrid');
-            if (!grid) return;
-            
-            var searchInput = document.getElementById('searchInput');
-            var searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
-            
-            grid.innerHTML = '';
-            
-            if (filteredReceipts.length === 0) {
-                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #6b7280;">' +
-                               '<h3>No receipts found</h3>' +
-                               '<p>Try adjusting your search or filters</p></div>';
-                return;
-            }
-            
-            for (var i = 0; i < filteredReceipts.length; i++) {
-                var receipt = filteredReceipts[i];
-                var card = createReceiptCard(receipt, searchQuery);
-                grid.appendChild(card);
-            }
-        }
-
-        function createReceiptCard(receipt, searchQuery) {
-            var card = document.createElement('div');
-            card.className = 'receipt-card';
-            
-            var categoryClass = receipt.category ? receipt.category.toUpperCase() : 'GENERAL';
-            var merchant = receipt.merchant || 'Unknown Merchant';
-            var amount = receipt.amount || 0;
-            
-            card.innerHTML = 
-                '<img src="' + receipt.imageData + '" alt="Receipt" class="receipt-thumbnail">' +
-                '<div class="receipt-info">' +
-                '<div class="receipt-merchant">' + merchant + '</div>' +
-                '<div class="receipt-amount">$' + amount.toFixed(2) + '</div>' +
-                '<div style="color: #6b7280; font-size: 0.9rem; margin-bottom: 0.5rem;">' + 
-                new Date(receipt.date).toLocaleDateString() + '</div>' +
-                '<div class="receipt-category">' + categoryClass + '</div>' +
-                '<div class="privacy-indicator">Privacy Protected</div>' +
-                '</div>';
-            
-            return card;
-        }
-
-        function updateResultsCount() {
-            var countDiv = document.getElementById('filterResultsCount');
-            if (!countDiv) return;
-            
-            var searchInput = document.getElementById('searchInput');
-            var searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
-            
-            if (filteredReceipts.length < allReceipts.length) {
-                var message = 'Showing ' + filteredReceipts.length + ' of ' + allReceipts.length + ' receipts';
-                
-                if (searchQuery) {
-                    message += ' matching "' + searchQuery + '"';
-                }
-                
-                countDiv.textContent = message;
-                countDiv.style.display = 'block';
-            } else {
-                countDiv.style.display = 'none';
-            }
-        }
-
-        function clearAllFilters() {
-            var searchInput = document.getElementById('searchInput');
-            if (searchInput) searchInput.value = '';
-            
-            var dateFrom = document.getElementById('dateFrom');
-            if (dateFrom) dateFrom.value = '';
-            
-            var dateTo = document.getElementById('dateTo');
-            if (dateTo) dateTo.value = '';
-            
-            var minAmount = document.getElementById('minAmount');
-            if (minAmount) minAmount.value = '';
-            
-            var maxAmount = document.getElementById('maxAmount');
-            if (maxAmount) maxAmount.value = '';
-            
-            var sortSelect = document.getElementById('sortSelect');
-            if (sortSelect) sortSelect.value = 'newest';
-            
-            applyAllFilters();
-            showNotification('All filters cleared', 'success');
-        }
-
-        function showNotification(message, type) {
-            var notification = document.getElementById('notification');
-            var text = document.getElementById('notificationText');
-            
-            notification.className = 'notification show';
-            if (type) notification.classList.add(type);
-            
-            text.textContent = message;
-            
-            setTimeout(function() {
-                notification.classList.remove('show');
-                setTimeout(function() {
-                    notification.className = 'notification';
-                }, 300);
-            }, 4000);
-        }
-
-        function saveUserState() {
-            if (currentUser) {
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            }
-        }
-
-        function loadUserState() {
-            try {
-                var savedUser = localStorage.getItem('currentUser');
-                if (savedUser) {
-                    currentUser = JSON.parse(savedUser);
-                    updateUserStatus();
-                }
-            } catch (e) {
-                console.log('No saved user state');
-            }
-        }
-
-        function updateUserStatus() {
-            var userStatus = document.getElementById('userStatus');
-            if (currentUser && userStatus) {
-                userStatus.textContent = currentUser.email + ' (FREE)';
-                userStatus.style.cursor = 'pointer';
-                userStatus.onclick = function() {
-                    if (confirm('Sign out?')) {
-                        signOut();
-                    }
-                };
-            } else if (userStatus) {
-                userStatus.textContent = 'Not signed in';
-                userStatus.style.cursor = 'default';
-                userStatus.onclick = null;
-            }
-        }
-
-        function signOut() {
-            currentUser = null;
-            localStorage.removeItem('currentUser');
-            updateUserStatus();
-            switchTab('upload');
-            showNotification('Signed out', 'info');
-        }
-
-        document.addEventListener('DOMContentLoaded', initializeApp);
-    </script>
-</body>
-</html>
+            var maxAmount
