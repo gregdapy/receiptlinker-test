@@ -142,6 +142,31 @@
         .video-wrapper { position: relative; overflow: hidden; border-radius: 0.5rem; }
         .video-preview.zoomed { transition: transform 0.3s ease; transform-origin: center center; }
 
+        /* CAMERA ENHANCEMENT STEP 2: STICKY CAMERA WITH FIXED POSITIONING */
+        .camera-interface-fixed {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            z-index: 900;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .camera-interface-fixed .camera-container {
+            max-width: 100%;
+            margin: 1rem auto;
+            padding: 0 1rem;
+        }
+
+        .camera-controls-scrollable {
+            margin-top: 420px; /* Space for fixed camera */
+            padding: 2rem 1rem;
+            background: white;
+            border-radius: 1rem 1rem 0 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
         /* CAMERA ENHANCEMENT STEP 2: POST-CAPTURE PREVIEW SCREEN */
         .post-capture-screen {
             background: white; border-radius: 1rem;
@@ -168,24 +193,6 @@
         .enhancement-title {
             font-size: 1rem; font-weight: 600; color: #2d5a3d;
             margin-bottom: 0.75rem; text-align: left;
-        }
-
-        .enhancement-options {
-            display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;
-        }
-
-        .enhancement-button {
-            background: white; border: 2px solid #e2e8f0; color: #475569;
-            padding: 0.5rem 1rem; border-radius: 0.375rem; font-size: 0.875rem;
-            cursor: pointer; transition: all 0.2s ease; min-width: 80px;
-        }
-
-        .enhancement-button:hover {
-            border-color: #2d5a3d; background: #f0f9f4;
-        }
-
-        .enhancement-button.active {
-            background: #2d5a3d; color: white; border-color: #2d5a3d;
         }
 
         .enhancement-slider {
@@ -256,12 +263,108 @@
         .notification.success { background: #10b981; }
         .hidden { display: none !important; }
 
+        /* MARKETING CONTENT SECTIONS - RESTORED FOR SCROLLABILITY */
+        .value-cards {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem; margin: 3rem 0;
+        }
+
+        .value-card {
+            background: white; padding: 2rem; border-radius: 1rem;
+            text-align: center; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .value-card:hover { transform: translateY(-5px); }
+
+        .value-card h3 {
+            font-size: 1.5rem; color: #2d5a3d; margin-bottom: 1rem;
+        }
+
+        .how-it-works {
+            background: white; padding: 3rem 2rem; border-radius: 1rem;
+            margin: 3rem 0; text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .steps-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem; margin-top: 2rem;
+        }
+
+        .step-card {
+            padding: 1.5rem; border-radius: 0.5rem; background: #f9fafb;
+        }
+
+        .step-number {
+            width: 40px; height: 40px; background: #2d5a3d; color: white;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; font-weight: bold; margin: 0 auto 1rem;
+        }
+
+        .use-cases {
+            margin: 3rem 0;
+        }
+
+        .use-cases-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem; margin-top: 2rem;
+        }
+
+        .use-case {
+            background: white; padding: 2rem; border-radius: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison {
+            background: white; padding: 3rem 2rem; border-radius: 1rem;
+            margin: 3rem 0; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table {
+            max-width: 800px; margin: 2rem auto; overflow-x: auto;
+        }
+
+        .comparison-table table {
+            width: 100%; border-collapse: collapse;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem; text-align: left; border-bottom: 1px solid #e5e7eb;
+        }
+
+        .comparison-table th {
+            background: #f9fafb; font-weight: 600;
+        }
+
+        .trust-indicators {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem; margin: 3rem 0;
+        }
+
+        .trust-item {
+            background: white; padding: 2rem; border-radius: 1rem;
+            text-align: center; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .final-cta {
+            background: linear-gradient(135deg, #2d5a3d 0%, #3b6951 100%);
+            color: white; padding: 3rem 2rem; border-radius: 1rem;
+            margin: 3rem 0; text-align: center;
+        }
+
+        .guarantee-text {
+            background: rgba(255, 255, 255, 0.1); padding: 1rem;
+            border-radius: 0.5rem; margin-top: 2rem; font-size: 0.9rem;
+        }
+
         @media (max-width: 768px) {
             .zoom-controls { top: 0.5rem; right: 0.5rem; padding: 0.5rem; }
             .zoom-button { width: 45px; height: 45px; font-size: 1.3rem; }
             .post-capture-screen { margin: 1rem; padding: 1.5rem; }
             .action-buttons { flex-direction: column; align-items: center; }
             .action-button { width: 100%; max-width: 280px; }
+            .camera-controls-scrollable { margin-top: 380px; }
         }
     </style>
 </head>
@@ -324,19 +427,25 @@
                 </div>
 
                 <div id="camera-interface" class="camera-container hidden">
-                    <div class="video-wrapper">
-                        <video id="videoPreview" class="video-preview" autoplay muted playsinline webkit-playsinline></video>
-                        
-                        <div class="zoom-controls">
-                            <button class="zoom-button" onclick="zoomIn()">+</button>
-                            <button class="zoom-button" onclick="zoomOut()">-</button>
-                            <div class="zoom-level-indicator" id="zoomLevel">1.0x</div>
+                    <div class="camera-interface-fixed">
+                        <div class="camera-container">
+                            <div class="video-wrapper">
+                                <video id="videoPreview" class="video-preview" autoplay muted playsinline webkit-playsinline></video>
+                                
+                                <div class="zoom-controls">
+                                    <button class="zoom-button" onclick="zoomIn()">+</button>
+                                    <button class="zoom-button" onclick="zoomOut()">-</button>
+                                    <div class="zoom-level-indicator" id="zoomLevel">1.0x</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="camera-controls">
-                        <button class="capture-btn" onclick="capturePhoto()">📷</button>
-                        <button class="camera-button secondary" onclick="stopCamera()">Stop Camera</button>
+                    <div class="camera-controls-scrollable">
+                        <div class="camera-controls">
+                            <button class="capture-btn" onclick="capturePhoto()">📷</button>
+                            <button class="camera-button secondary" onclick="stopCamera()">Stop Camera</button>
+                        </div>
                     </div>
                 </div>
 
@@ -349,17 +458,8 @@
                     
                     <div class="enhancement-controls">
                         <div class="enhancement-section">
-                            <div class="enhancement-title">Quick Enhancements</div>
-                            <div class="enhancement-options">
-                                <button class="enhancement-button" onclick="applyQuickEnhancement('sharpen')">Sharpen</button>
-                                <button class="enhancement-button" onclick="applyQuickEnhancement('brighten')">Brighten</button>
-                                <button class="enhancement-button" onclick="applyQuickEnhancement('contrast')">Contrast</button>
-                                <button class="enhancement-button active" onclick="applyQuickEnhancement('original')">Original</button>
-                            </div>
-                        </div>
-                        
-                        <div class="enhancement-section">
-                            <div class="enhancement-title">Fine Adjustments</div>
+                            <div class="enhancement-title">Image Enhancement</div>
+                            
                             <label style="font-size: 0.875rem; color: #64748b; display: block; margin: 0.75rem 0 0.5rem;">Brightness</label>
                             <input type="range" class="enhancement-slider" id="brightnessSlider" min="-50" max="50" value="0" oninput="adjustBrightness()">
                             <div class="slider-labels"><span>Dark</span><span>Normal</span><span>Bright</span></div>
@@ -367,10 +467,15 @@
                             <label style="font-size: 0.875rem; color: #64748b; display: block; margin: 1rem 0 0.5rem;">Contrast</label>
                             <input type="range" class="enhancement-slider" id="contrastSlider" min="-50" max="50" value="0" oninput="adjustContrast()">
                             <div class="slider-labels"><span>Low</span><span>Normal</span><span>High</span></div>
+                            
+                            <label style="font-size: 0.875rem; color: #64748b; display: block; margin: 1rem 0 0.5rem;">Sharpen</label>
+                            <input type="range" class="enhancement-slider" id="sharpenSlider" min="0" max="100" value="0" oninput="adjustSharpen()">
+                            <div class="slider-labels"><span>Soft</span><span>Normal</span><span>Sharp</span></div>
                         </div>
                     </div>
                     
                     <div class="action-buttons">
+                        <button class="action-button secondary" onclick="undoEnhancements()">Undo</button>
                         <button class="action-button danger" onclick="retakePhoto()">Retake</button>
                         <button class="action-button accent" onclick="addPage()">Add Page</button>
                         <button class="action-button primary" onclick="saveEnhancedImage()">Save</button>
@@ -482,6 +587,123 @@
                 </div>
             </div>
         </div>
+
+        <!-- RESTORED MARKETING CONTENT FOR SCROLLABILITY -->
+        <div class="value-cards">
+            <div class="value-card">
+                <h3>Privacy-First Protection</h3>
+                <p>Bank-level encryption and automatic personal information redaction. Your receipts are processed with enterprise-grade security, ensuring sensitive data never leaves your control.</p>
+            </div>
+            <div class="value-card">
+                <h3>Instant Access</h3>
+                <p>No password required. Sign in with just your email and access your receipts instantly from any device. Perfect for customer service calls and warranty claims.</p>
+            </div>
+            <div class="value-card">
+                <h3>Actually Free Forever</h3>
+                <p>Upload unlimited receipts, generate permanent URLs, and access your gallery forever. No hidden fees, no trial periods, no credit card required.</p>
+            </div>
+        </div>
+
+        <div class="how-it-works">
+            <h2>How ReceiptLinker Works</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>Upload Receipt</h4>
+                    <p>Use your camera or upload files. Our privacy protection automatically detects and protects personal information.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>Get Permanent Link</h4>
+                    <p>Receive a permanent URL instantly via email. Your receipt is stored securely and accessible forever.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>Use Anywhere</h4>
+                    <p>Share links for returns, warranties, expense reports. Access from any device, anytime, anywhere.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="use-cases">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Who Uses ReceiptLinker</h2>
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <h4>Online Shoppers</h4>
+                    <p>"Perfect for returns and warranty claims. I never lose digital receipts anymore and can access them from anywhere for customer service calls."</p>
+                </div>
+                <div class="use-case">
+                    <h4>Business Owners</h4>
+                    <p>"Saves hours on expense tracking. Upload receipts instantly and share permanent links with my accountant. Privacy protection gives me peace of mind."</p>
+                </div>
+                <div class="use-case">
+                    <h4>Busy Families</h4>
+                    <p>"No more digging through purses for warranties. Kids can access receipt links for school supplies, and we never miss return deadlines."</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="comparison">
+            <h2 style="text-align: center;">ReceiptLinker vs Competition</h2>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>ReceiptLinker</th>
+                            <th>Other Apps</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Privacy Protection</td>
+                            <td>✓ Automatic</td>
+                            <td>✗ Manual or None</td>
+                        </tr>
+                        <tr>
+                            <td>Permanent URLs</td>
+                            <td>✓ Forever Links</td>
+                            <td>✗ App-Dependent</td>
+                        </tr>
+                        <tr>
+                            <td>Email Access</td>
+                            <td>✓ No Password</td>
+                            <td>✗ Complex Signups</td>
+                        </tr>
+                        <tr>
+                            <td>Free Tier</td>
+                            <td>✓ Actually Free</td>
+                            <td>✗ Limited Trials</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="trust-indicators">
+            <div class="trust-item">
+                <h4>Google Cloud DLP</h4>
+                <p>Enterprise-grade privacy protection automatically detects and redacts sensitive personal information from your receipts.</p>
+            </div>
+            <div class="trust-item">
+                <h4>Email Delivery</h4>
+                <p>Instant receipt links delivered to your inbox. No app required to access your receipts from any device, anywhere.</p>
+            </div>
+            <div class="trust-item">
+                <h4>Always Accessible</h4>
+                <p>Your receipts work forever, even if you stop using the app. Permanent URLs ensure you never lose access to important documents.</p>
+            </div>
+        </div>
+
+        <div class="final-cta">
+            <h2>Never Lose a Receipt Again</h2>
+            <p>Join thousands of users who trust ReceiptLinker for privacy-protected receipt storage</p>
+            <button class="camera-button" style="background: white; color: #2d5a3d; margin: 1rem 0;">Start Free Today</button>
+            <div class="guarantee-text">
+                100% Free Forever • No Credit Card Required • Privacy Guaranteed<br>
+                Your receipts, your data, your control. Always.
+            </div>
+        </div>
     </div>
 
     <div id="notification" class="notification">
@@ -550,42 +772,12 @@
         }
 
         function resetEnhancements() {
-            var buttons = document.querySelectorAll('.enhancement-button');
-            for (var i = 0; i < buttons.length; i++) {
-                buttons[i].classList.remove('active');
-            }
-            var originalButton = buttons[3]; // Original button
-            if (originalButton) originalButton.classList.add('active');
-            
             var brightnessSlider = document.getElementById('brightnessSlider');
             if (brightnessSlider) brightnessSlider.value = '0';
             var contrastSlider = document.getElementById('contrastSlider');
             if (contrastSlider) contrastSlider.value = '0';
-        }
-
-        function applyQuickEnhancement(enhancement) {
-            var buttons = document.querySelectorAll('.enhancement-button');
-            for (var i = 0; i < buttons.length; i++) {
-                buttons[i].classList.remove('active');
-            }
-            event.target.classList.add('active');
-            
-            switch(enhancement) {
-                case 'sharpen':
-                    applyCanvasFilter('contrast(1.2) brightness(1.1) saturate(1.1)');
-                    break;
-                case 'brighten':
-                    applyCanvasFilter('brightness(1.3) contrast(1.1)');
-                    break;
-                case 'contrast':
-                    applyCanvasFilter('contrast(1.4) brightness(1.1)');
-                    break;
-                case 'original':
-                default:
-                    applyCanvasFilter('none');
-                    break;
-            }
-            showNotification(enhancement === 'original' ? 'Reset to original' : 'Applied ' + enhancement, 'success');
+            var sharpenSlider = document.getElementById('sharpenSlider');
+            if (sharpenSlider) sharpenSlider.value = '0';
         }
 
         function adjustBrightness() {
@@ -596,17 +788,24 @@
             applyEnhancementsFromSliders();
         }
 
+        function adjustSharpen() {
+            applyEnhancementsFromSliders();
+        }
+
         function applyEnhancementsFromSliders() {
             var brightnessSlider = document.getElementById('brightnessSlider');
             var contrastSlider = document.getElementById('contrastSlider');
+            var sharpenSlider = document.getElementById('sharpenSlider');
             
             var brightness = brightnessSlider ? parseInt(brightnessSlider.value) : 0;
             var contrast = contrastSlider ? parseInt(contrastSlider.value) : 0;
+            var sharpen = sharpenSlider ? parseInt(sharpenSlider.value) : 0;
             
             var brightnessValue = 1 + (brightness / 100);
             var contrastValue = 1 + (contrast / 100);
+            var saturateValue = 1 + (sharpen / 100);
             
-            var filterString = 'brightness(' + brightnessValue + ') contrast(' + contrastValue + ')';
+            var filterString = 'brightness(' + brightnessValue + ') contrast(' + contrastValue + ') saturate(' + saturateValue + ')';
             applyCanvasFilter(filterString);
         }
 
@@ -632,6 +831,18 @@
             };
             
             img.src = originalImageData;
+        }
+
+        function undoEnhancements() {
+            if (originalImageData) {
+                var previewImg = document.getElementById('capturedImagePreview');
+                if (previewImg) {
+                    previewImg.src = originalImageData;
+                }
+                currentImage = originalImageData;
+                resetEnhancements();
+                showNotification('Enhancements reset to original', 'info');
+            }
         }
 
         function retakePhoto() {
@@ -819,9 +1030,26 @@
             var canvas = document.createElement('canvas');
             var context = canvas.getContext('2d');
             
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0);
+            // FIXED: Capture with zoom applied
+            var displayWidth = video.videoWidth;
+            var displayHeight = video.videoHeight;
+            
+            if (currentZoom > 1.0) {
+                // Calculate cropped dimensions
+                var cropWidth = displayWidth / currentZoom;
+                var cropHeight = displayHeight / currentZoom;
+                var cropX = (displayWidth - cropWidth) / 2;
+                var cropY = (displayHeight - cropHeight) / 2;
+                
+                canvas.width = cropWidth;
+                canvas.height = cropHeight;
+                context.drawImage(video, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+            } else {
+                canvas.width = displayWidth;
+                canvas.height = displayHeight;
+                context.drawImage(video, 0, 0);
+            }
+            
             currentImage = canvas.toDataURL('image/jpeg', 0.95);
             
             stopCamera();
